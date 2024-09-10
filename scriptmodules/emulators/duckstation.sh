@@ -15,7 +15,7 @@ rp_module_help="ROM Extensions: .bin .cue .img .iso\n\nCopy your PSX roms to $ro
 rp_module_licence="GPL2 https://raw.githubusercontent.com/stenzek/duckstation/master/LICENSE"
 rp_module_repo="file https://github.com/Exarkuniv/Rpi-pikiss-binary/raw/Master/duckstation-rpi-buster.tar.gz"
 rp_module_section="exp"
-rp_module_flags="!armv6 rpi4 !rpi5"
+rp_module_flags="!armv6 rpi4 !rpi5 x86"
 
 function depends_duckstation() {
     getDepends libsdl2-dev libxrandr-dev pkg-config qtbase5-dev qtbase5-private-dev qtbase5-dev-tools qttools5-dev libevdev-dev libwayland-dev libwayland-egl-backend-dev extra-cmake-modules libcurl4-gnutls-dev libgbm-dev libdrm-dev xorg matchbox-window-manager
@@ -42,7 +42,7 @@ function configure_duckstation() {
     mkdir -p "/home/pi/.local/share/duckstation/"
     
     # symlink the bios so it can be installed with the other bios files
-    ln -sf "$biosdir/" "/home/pi/.local/share/duckstation/bios"
+    ln -sf "$biosdir/" "$home/.local/share/duckstation/bios"
 
     addEmulator 0 "$md_id" "psx" "XINIT: $md_inst/duckstation.sh -fullscreen %ROM%"
     addSystem "psx"
@@ -57,5 +57,5 @@ pushd "$md_inst/duckstation"
 popd
 _EOF_
     chmod +x "$file"
-	chown $user:$user -R "/home/pi/.local/share/duckstation"
+	chown $__user:$__user -R "$home/.local/share/duckstation"
 }

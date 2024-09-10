@@ -36,13 +36,12 @@ function sources_openmw() {
 function build_openmw() {
     if [ ! -f "/usr/local/lib/libOpenThreads.so" ]; then
         gitPullOrClone "$md_build/openosg" https://github.com/OpenMW/osg.git
-    cd "$md_build/openosg"
-    cmake . -DBUILD_OSG_PLUGINS_BY_DEFAULT=0 -DBUILD_OSG_PLUGIN_OSG=1 -DBUILD_OSG_PLUGIN_DDS=1 -DBUILD_OSG_PLUGIN_TGA=1 -DBUILD_OSG_PLUGIN_BMP=1 -DBUILD_OSG_PLUGIN_JPEG=1 -DBUILD_OSG_PLUGIN_PNG=1 -DBUILD_OSG_PLUGIN_FREETYPE=1 -DBUILD_OSG_DEPRECATED_SERIALIZERS=0 -DOPENGL_PROFILE=GL2 -DOSG_GLES1_AVAILABLE=FALSE -DOSG_GLES2_AVAILABLE=FALSE -DOSG_GLES3_AVAILABLE=FALSE    
-    make
-    cd "$md_build/openosg"
-    sudo make install
-    rm -r "$md_build/openosg"
-	
+        cd "$md_build/openosg"
+        cmake . -DBUILD_OSG_PLUGINS_BY_DEFAULT=0 -DBUILD_OSG_PLUGIN_OSG=1 -DBUILD_OSG_PLUGIN_DDS=1 -DBUILD_OSG_PLUGIN_TGA=1 -DBUILD_OSG_PLUGIN_BMP=1 -DBUILD_OSG_PLUGIN_JPEG=1 -DBUILD_OSG_PLUGIN_PNG=1 -DBUILD_OSG_PLUGIN_FREETYPE=1 -DBUILD_OSG_DEPRECATED_SERIALIZERS=0 -DOPENGL_PROFILE=GL2 -DOSG_GLES1_AVAILABLE=FALSE -DOSG_GLES2_AVAILABLE=FALSE -DOSG_GLES3_AVAILABLE=FALSE
+        make
+        cd "$md_build/openosg"
+        sudo make install
+        rm -r "$md_build/openosg"
     fi
 
     mkdir $md_build/build

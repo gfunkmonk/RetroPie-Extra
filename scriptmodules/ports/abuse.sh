@@ -42,7 +42,7 @@ if isPlatform "64bit"; then
 		md_ret_require=()
     else
         cd abuse-0.8
-	    ./configure --enable-debug   
+	    ./configure --enable-debug
 	    make
 		md_ret_require=()
 	fi

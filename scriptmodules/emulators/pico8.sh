@@ -51,7 +51,7 @@ function configure_pico8() {
 #!/bin/bash
 $md_inst/pico8_dyn -root_path $homeRetroPie/roms/pico8 -splore
 _EOF_
-    chown $user:$user "$romdir/pico8/+Start PICO8.sh"
+    chown $__user:$__group "$romdir/pico8/+Start PICO8.sh"
     chmod u+x "$romdir/pico8/+Start PICO8.sh"
 
     addEmulator 0 "$md_id" "pico8" "$md_inst/pico8_dyn -root_path $home/RetroPie/roms/$md_id -run %ROM%"

@@ -27,17 +27,16 @@ function sources_gearboy() {
 }
 
 function build_gearboy() {
-     cd "$md_build/platforms/linux"
+    cd "$md_build/platforms/linux"
     make clean
     make
     strip "gearboy"
 
-        md_ret_require="$md_build/platforms/linux/gearboy"
+    md_ret_require="$md_build/platforms/linux/gearboy"
 }
 
 function install_gearboy() {
-        cp "$md_build/platforms/linux/gearboy" "$md_inst/gearboy"
-
+    cp "$md_build/platforms/linux/gearboy" "$md_inst/gearboy"
 }
 
 function configure_gearboy() {
