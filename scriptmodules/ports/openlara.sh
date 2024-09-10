@@ -46,8 +46,8 @@ function install_openlara() {
 
 function game_data_openlara() {
     mkdir "$home/.openlara"
-    chown -R $user:$user "$romdir/ports/tombraider"
-    chown -R $user:$user "$md_conf_root/openlara"
+    chown -R $__user:$__group "$romdir/ports/tombraider"
+    chown -R $__user:$__group "$md_conf_root/openlara"
 }
 
 function configure_openlara() {
@@ -60,5 +60,5 @@ function configure_openlara() {
     [[ "$md_mode" == "install" ]] && game_data_openlara
 }
 function remove_openlara() {
- 	rm /home/pi/.openlara
+ 	rm $home/.openlara
 }

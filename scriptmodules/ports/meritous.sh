@@ -39,7 +39,7 @@ function install_meritous() {
 
 function configure_meritous() {
     local script="$md_inst/$md_id.sh"
-    chown pi:pi "$md_inst"
+    chown $__user:$__group "$md_inst"
     mkRomDir "ports"
 	#create buffer script for launch
  cat > "$script" << _EOF_

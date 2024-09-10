@@ -46,11 +46,11 @@ function build_openrct2() {
 }
 
 function game_data_openrct2() {
-      if [[ ! -f "/home/pi/.config/OpenRCT2/config.ini" ]]; then
-        git clone "https://github.com/Exarkuniv/RCTconfig.git" "/home/pi/.config/OpenRCT2"
+      if [[ ! -f "$home/.config/OpenRCT2/config.ini" ]]; then
+        git clone "https://github.com/Exarkuniv/RCTconfig.git" "$home/.config/OpenRCT2"
       fi
-     chown -R pi:pi "/home/pi/.config/OpenRCT2"
-     chmod +x "/home/pi/.config/OpenRCT2/config.ini"
+     chown -R $__user:$__group "$home/.config/OpenRCT2"
+     chmod +x "$home/.config/OpenRCT2/config.ini"
 }
 
 function install_openrct2() {
@@ -76,5 +76,5 @@ _EOF_
     mkRomDir "ports/openrct1"
 
    [[ "$md_mode" == "install" ]] && game_data_openrct2
-   chown -R pi:pi "/home/pi/.config/OpenRCT2"
+   chown -R $__user:$__group "$home/.config/OpenRCT2"
 }

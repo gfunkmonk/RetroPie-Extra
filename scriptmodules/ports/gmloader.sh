@@ -29,17 +29,16 @@ rp_module_licence="GPL3 https://raw.githubusercontent.com/JohnnyonFlame/droidpor
 rp_module_section="exp"
 rp_module_flags="!all rpi5 rpi4 rpi3"
 
-
 function depends_gmloader() {
-    if isPlatform "64bit" ; then
-        if [[ $(grep -c "^\s*kernel\s*=\s*kernel8.img" /boot/firmware/config.txt) -ne 1 ]] ; then
+    if isPlatform "64bit"; then
+        if [[ $(grep -c "^\s*kernel\s*=\s*kernel8.img" /boot/firmware/config.txt) -ne 1 ]]; then
             local _msg="For this module to compile successfully you will need to "
             _msg+="add the line\n\n  kernel=kernel8.img\n\nto your "
             _msg+="/boot/firmware/config.txt.\n\nAfter you applied the "
             _msg+="change reboot and rerun this module."
             printMsgs "dialog" "$_msg"
             exit 1
-        fi 
+        fi
         dpkg --add-architecture armhf
         apt-get remove -y gcc:arm64 g++:arm64 binutils:arm64
 
@@ -91,7 +90,7 @@ function _gmloader_dpkg_divert() {
     if apt-mark showmanual | grep -q "^libsdl2-dev$"; then
         # divert only when arm64 dev package is present otherwise SDL_config.h is not found at build time
         for f in "${divert_libsdl2_dev[@]}"; do
-            if [[ "$action" == "add" ]] ; then
+            if [[ "$action" == "add" ]]; then
                 dpkg-divert --divert "${f}.$(_gmloader_get_rp_pkg_ver_sdl2)_armhf" --no-rename "${f}"
             else
                 dpkg-divert --remove --no-rename "${f}"
@@ -99,8 +98,8 @@ function _gmloader_dpkg_divert() {
         done
     fi
     for f in "${divert_libsdl2[@]}"; do
-        if [[ "$action" == "add" ]] ; then
-            dpkg-divert --divert "${f}.$(_gmloader_get_rp_pkg_ver_sdl2)_armhf"  --no-rename "${f}"
+        if [[ "$action" == "add" ]]; then
+            dpkg-divert --divert "${f}.$(_gmloader_get_rp_pkg_ver_sdl2)_armhf" --no-rename "${f}"
         else
             dpkg-divert --remove --no-rename "${f}"
         fi
@@ -116,8 +115,8 @@ function _gmloader_install_rp_sdl2() {
     # if the packages don't install completely due to missing dependencies the apt-get -y -f install will correct it
     # solved with diverting /usr/share/doc files (-o DPkg::options::="--force-overwrite")
     if ! apt-get -y --allow-downgrades --allow-change-held-packages install \
-            "./libsdl2-2.0-0_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb" \
-            "./libsdl2-dev_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb"; then
+        "./libsdl2-2.0-0_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb" \
+        "./libsdl2-dev_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb"; then
         apt-get -y -f --no-install-recommends --allow-downgrades --allow-change-held-packages install
     fi
     apt-mark hold libsdl2-2.0-0:armhf
@@ -142,8 +141,8 @@ function _gmloader_dl_install_bin_sdl2() {
     pushd "$tmp" >/dev/null
     chown _apt .
     local ret=1
-    if downloadAndVerify "$__binary_url/libsdl2-dev_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb" && \
-       downloadAndVerify "$__binary_url/libsdl2-2.0-0_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb"; then
+    if downloadAndVerify "$__binary_url/libsdl2-dev_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb" &&
+        downloadAndVerify "$__binary_url/libsdl2-2.0-0_$(_gmloader_get_rp_pkg_ver_sdl2)_armhf.deb"; then
         _gmloader_install_rp_sdl2
         ret=0
     fi
@@ -167,8 +166,8 @@ function build_gmloader() {
         -DPORT=gmloader
     )
 
-    if isPlatform "64bit" ; then
-        sed -e "s;_crosslib_var;$(_gmloader_armhf_libdir);" "$md_data/toolchain_armhf_multiarch.tpl" > "$md_data/toolchain_armhf_multiarch.cmake"
+    if isPlatform "64bit"; then
+        sed -e "s;_crosslib_var;$(_gmloader_armhf_libdir);" "$md_data/toolchain_armhf_multiarch.tpl" >"$md_data/toolchain_armhf_multiarch.cmake"
         cmflags+=(-DCMAKE_TOOLCHAIN_FILE="$md_data/toolchain_armhf_multiarch.cmake")
     fi
 
@@ -184,7 +183,7 @@ function install_gmloader() {
         'LICENSE.md'
         'README.md'
     )
-    if isPlatform "64bit" ; then
+    if isPlatform "64bit"; then
         cd /usr/arm-linux-gnueabihf/lib
         [[ -L crtbeginS.o ]] || ln -s $(_gmloader_armhf_libdir)/crtbeginS.o
         [[ -L crtendS.o ]] || ln -s $(_gmloader_armhf_libdir)/crtendS.o
@@ -207,13 +206,13 @@ function configure_gmloader() {
         for dl_url in "$am2r_url" "$maldita_url" "$spelunky_url"; do
             local dest_file
             dest_file=$(basename ${dl_url})
-            if case "$dest_file" in AM2R*) ;; *) false;; esac; then
+            if case "$dest_file" in AM2R*) ;; *) false ;; esac then
                 dest_file="AM2R.apk"
             fi
             local apk_file="$apk_dir/$dest_file"
             if [[ ! -f "$apk_file" ]]; then
                 download "$dl_url" "$apk_file"
-                chown $user:$user "$apk_file"
+                chown $__user:$__group "$apk_file"
             fi
         done
 
@@ -227,7 +226,7 @@ function configure_gmloader() {
 
         # Launcher: Change to install folder md_inst as failsafe to allow gmloader to find
         # libc++_shared.so sibling to gmloader binary for APKs which do not bundle the lib
-        cat >"$md_inst/gmlauncher.sh" << _EOF_
+        cat >"$md_inst/gmlauncher.sh" <<_EOF_
 #! /usr/bin/env bash
 cd "$md_inst"
 ROM="\$1"

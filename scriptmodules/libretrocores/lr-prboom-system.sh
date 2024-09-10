@@ -44,7 +44,7 @@ function game_data_lr-prboom-system() {
         downloadAndExtract "https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.12.1.zip" "$romdir/doom/" -j -LL
     fi
 
-    chown -R $user:$user "$romdir/doom"
+    chown -R $__user:$__group "$romdir/doom"
 }
 
 function configure_lr-prboom-system() {
@@ -54,7 +54,7 @@ function configure_lr-prboom-system() {
     [[ "$md_mode" == "install" ]] && game_data_lr-prboom-system
 
     cp prboom.wad "$romdir/doom/"
-    chown $user:$user "$romdir/doom/prboom.wad"
+    chown $__user:$__group "$romdir/doom/prboom.wad"
 
     addEmulator 0 "lr-prboom" "doom" "$md_inst/prboom_libretro.so %ROM%"
     addSystem "doom" "DOOM" ".pk3 .wad"

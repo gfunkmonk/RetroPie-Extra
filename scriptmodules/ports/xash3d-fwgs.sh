@@ -81,7 +81,7 @@ function configure_xash3d-fwgs() {
 	cp "$md_build/$md_id/build/3rdparty/extras/extras.pk3" "$romdir/ports/$md_id/valve/"
 	cp "$md_build/$md_id/build/3rdparty/extras/extras.pk3" "$romdir/ports/$md_id/bshift/"
 	cp "$md_build/$md_id/build/3rdparty/extras/extras.pk3" "$romdir/ports/$md_id/gearbox/"
-	chown -R $user:$user "$romdir/ports/$md_id/"
+	chown -R $__user:$__group "$romdir/ports/$md_id/"
 
     addPort "$md_id" "xash3d-fwgs" "Half-Life" "pushd $romdir/ports/$md_id/; LD_LIBRARY_PATH=$md_inst $md_inst/xash3d -game %ROM% -clientlib cl_dlls/client.so -dll dlls/hl.so; popd" "valve"
 	addPort "$md_id" "xash3d-fwgs" "Half-Life - Blue Shift" "pushd $romdir/ports/$md_id/; LD_LIBRARY_PATH=$md_inst $md_inst/xash3d -game %ROM% -clientlib cl_dlls/client.so -dll dlls/hl.so; popd" "bshift"

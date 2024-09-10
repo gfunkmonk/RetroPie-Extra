@@ -50,8 +50,8 @@ function configure_relive() {
 	mkRomDir "ports/exoddus"
 	mkRomDir "ports/oddysee"
 	
-	cp -r /opt/retropie/ports/relive/relive /home/pi/RetroPie/roms/ports/oddysee
-	cp -r /opt/retropie/ports/relive/relive /home/pi/RetroPie/roms/ports/exoddus
+	cp -r /opt/retropie/ports/relive/relive $home/RetroPie/roms/ports/oddysee
+	cp -r /opt/retropie/ports/relive/relive $home/RetroPie/roms/ports/exoddus
 
 	addPort "$md_id" "reliveae" "Oddworld: Abe's Exoddus" "XINIT: $md_inst/ae.sh"
 	addPort "$md_id" "reliveao" "Oddworld: Abe's Oddysee" "XINIT: $md_inst/ao.sh"
@@ -59,7 +59,7 @@ function configure_relive() {
 cat >"$md_inst/ao.sh" << _EOF_
 
 #!/bin/bash
-cd "/home/pi/RetroPie/roms/ports/oddysee"
+cd "$home/RetroPie/roms/ports/oddysee"
 ./relive
 
 _EOF_
@@ -68,11 +68,11 @@ _EOF_
 cat >"$md_inst/ae.sh" << _EOF_
 
 #!/bin/bash
-cd "/home/pi/RetroPie/roms/ports/exoddus"
+cd "$home/RetroPie/roms/ports/exoddus"
 ./relive
 
 _EOF_
 	chmod +x "$md_inst/ae.sh"
-	chown -R pi:pi "/home/pi/RetroPie/roms/ports/exoddus/relive"
-	chown -R pi:pi "/home/pi/RetroPie/roms/ports/oddysee/relive"
+	chown -R $__user:$__group "$home/RetroPie/roms/ports/exoddus/relive"
+	chown -R $__user:$__group "$home/RetroPie/roms/ports/oddysee/relive"
 }

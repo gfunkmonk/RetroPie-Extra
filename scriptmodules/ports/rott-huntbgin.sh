@@ -46,10 +46,10 @@ function game_data_rott-huntbgin() {
         downloadAndExtract "https://github.com/Exarkuniv/game-data/raw/main/HUNTBGIN.zip" "$romdir/ports/rott"
     mv "$romdir/ports/rott/HUNTBGIN/"* "$romdir/ports/rott/"
     rmdir "$romdir/ports/rott/HUNTBGIN/"
-    chown -R $user:$user "$romdir/ports/rott"
+    chown -R $__user:$__group "$romdir/ports/rott"
     fi
 
-    chown -R $user:$user "$romdir/ports/rott"
+    chown -R $__user:$__group "$romdir/ports/rott"
 }
 
 function configure_rott-huntbgin() {

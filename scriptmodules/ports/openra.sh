@@ -30,7 +30,7 @@ function depends_openra() {
 function sources_openra() {
     mkdir -p openra
     wget https://github.com/OpenRA/OpenRA/releases/download/release-20230225/OpenRA-release-20230225-source.tar.bz2
-    tar xvjf OpenRA-release-20230225-source.tar.bz2 -C /home/pi/RetroPie-Setup/tmp/build/openra/openra 	
+    tar xvjf OpenRA-release-20230225-source.tar.bz2 -C $home/RetroPie-Setup/tmp/build/openra/openra 	
 }
 
 function build_openra() {

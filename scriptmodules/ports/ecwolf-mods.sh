@@ -101,5 +101,5 @@ function configure_ecwolf-mod() {
     [[ "$md_mode" == "install" ]] && game_data_ecwolf-mod
     [[ "$md_mode" == "install" ]] && add_games_ecwolf-mod
 
-    chown -R $user:$user "$romdir/ports/wolf3d"
+    chown -R $__user:$__group "$romdir/ports/wolf3d"
 }

@@ -43,5 +43,5 @@ function configure_lr-bk() {
     addSystem "bk" "BK" ".bin" ".zip" ".ZIP"
 
     mkdir -p "$biosdir/bk"
-    chown $user:$user -R "$biosdir/bk"
+    chown $__user:$__group -R "$biosdir/bk"
 }

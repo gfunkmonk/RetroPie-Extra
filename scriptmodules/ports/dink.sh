@@ -102,7 +102,7 @@ function _gui_dink_install() {
         folder=${search%-*}
         sudo mv ${folder}/ /usr/share/games/dink
         touch ${romdir}/${md_id}/${folder}.dsm
-        chown $user:$user "${romdir}/${md_id}/${folder}.dsm"
+        chown $__user:$__group "${romdir}/${md_id}/${folder}.dsm"
 
         rm "${search}.dmod.out"
         rm "${search}.dmod"

@@ -46,7 +46,7 @@ function game_data_opendune() {
 
     if [[ ! -f "$romdir/ports/dune2/DUNE2.EXE" ]]; then
         downloadAndExtract "https://github.com/Exarkuniv/game-data/raw/main/dune-II.zip" "$romdir/ports/dune2/data"
-    chown -R $user:$user "$romdir/ports/dune2/data"
+    chown -R $__user:$__group "$romdir/ports/dune2/data"
     fi
     #changing the config to work with RetroPie
     sed -i -e "/;datadir=$usr$local$opendune/c\\datadir=$romdir/ports/dune2/data" -e "/;fullscreen=1/c\\fullscreen=1" -e "/;language=french/c\\language=english" -e "10d" -e "/save/a savedir=$md_conf_root/opendune" $home/.config/opendune/opendune.ini

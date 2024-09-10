@@ -131,8 +131,8 @@ function game_data_rtcw() {
     mv /opt/retropie/ports/rtcw/vm /opt/retropie/ports/rtcw/main
     cp "$md_data/wolfconfig.cfg" "$home/.wolf/main"
     cp "$md_data/wolfconfig_mp.cfg" "$home/.wolf/main"
-    chown -R $user:$user "$romdir/ports/rtcw"
-    chown -R $user:$user "$md_conf_root/rtcw-sp"
+    chown -R $__user:$__group "$romdir/ports/rtcw"
+    chown -R $__user:$__group "$md_conf_root/rtcw-sp"
 }
 
 function configure_rtcw() {

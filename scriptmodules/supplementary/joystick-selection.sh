@@ -58,7 +58,7 @@ function install_joystick-selection() {
     fi
 
     # needed for proper permissions for gamelist.xml and icons/joystick_selection.png
-    chown -R $user:$user "$datadir/retropiemenu"
+    chown -R $__user:$__group "$datadir/retropiemenu"
 
     md_ret_files=(
         'jslist'

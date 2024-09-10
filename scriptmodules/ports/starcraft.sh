@@ -24,7 +24,7 @@ function depends_starcraft() {
 function sources_starcraft() {
     wget "$md_repo_url"
     7z x "starcraft-rpi.7z" 
-    chown -R pi:pi "$md_build/$md_id"
+    chown -R $__user:$__group "$md_build/$md_id"
     rm "starcraft-rpi.7z"
     mv -f "$md_build/starcraft/libscr_sa_arm.exe.so" "$md_build"
     chmod 755 "$md_build/libscr_sa_arm.exe.so"
@@ -41,7 +41,7 @@ function configure_starcraft() {
     mv -f "$md_build/starcraft" "$romdir/ports"
     rm -f "$romdir/ports/starcraft/starcraft.sh"
     ln -snf "$romdir/ports/starcraft" "$md_inst"
-    ln -sf "/opt/retropie/ports/starcraft/libscr_sa_arm.exe.so" "/home/pi/RetroPie/roms/ports/starcraft/libscr_sa_arm.exe.so"   
+    ln -sf "/opt/retropie/ports/starcraft/libscr_sa_arm.exe.so" "$home/RetroPie/roms/ports/starcraft/libscr_sa_arm.exe.so"
      moveConfigDir "$romdir/ports/$md_id/save" "$md_conf_root/starcraft/save"
 
     local script="$md_inst/starcraft.sh"

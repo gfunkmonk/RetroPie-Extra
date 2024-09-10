@@ -46,11 +46,11 @@ function configure_heboris() {
     local conf
 
     for conf in config replay res; do
-        chown -R $user:$user "$md_inst/$conf"
+        chown -R $__user:$__group "$md_inst/$conf"
         moveConfigDir "$md_inst/$conf" "$md_conf_root/$md_id/$conf"
     done
 
-    chown $user:$user "$md_inst/heboris.ini"
+    chown $__user:$__group "$md_inst/heboris.ini"
     moveConfigFile "$md_inst/heboris.ini" "$md_conf_root/$md_id/heboris.ini"
 
     #create buffer script for launch

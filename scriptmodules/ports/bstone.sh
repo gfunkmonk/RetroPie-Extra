@@ -46,7 +46,7 @@ function game_data_bstone() {
     rmdir "$romdir/ports/bstone/aog/bstone/"
 
     fi
-    chown -R $user:$user "$romdir/ports/bstone"
+    chown -R $__user:$__group "$romdir/ports/bstone"
 }
 
 function configure_bstone() {

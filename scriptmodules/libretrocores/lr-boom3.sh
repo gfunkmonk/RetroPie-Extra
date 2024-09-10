@@ -87,5 +87,5 @@ function configure_lr-boom3() {
 
     [[ "$md_mode" == "install" ]] && add_games_lr-boom3
 
-    chown $user:$user "ports/doom3"
+    chown $__user:$__group "ports/doom3"
 }

@@ -39,7 +39,7 @@ function install_duckstation() {
 function configure_duckstation() {
     mkRomDir "psx"
     mkUserDir "$md_conf_root/psx"
-    mkdir -p "/home/pi/.local/share/duckstation/"
+    mkdir -p "$home/.local/share/duckstation/"
     
     # symlink the bios so it can be installed with the other bios files
     ln -sf "$biosdir/" "$home/.local/share/duckstation/bios"

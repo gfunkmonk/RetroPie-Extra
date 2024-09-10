@@ -73,6 +73,6 @@ xset -dpms s off s noblank
 xterm -g 1x1+0-0 -e 'cd $md_inst && ./Ikemen_GO'
 _EOF_
     chmod +x "$md_inst/ikemen-go.sh"
-    chown -R $user:$user "$md_inst"
-    chown -R $user:$user "$romdir/ports/ikemen-go"
+    chown -R $__user:$__group "$md_inst"
+    chown -R $__user:$__group "$romdir/ports/ikemen-go"
 }

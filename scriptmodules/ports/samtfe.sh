@@ -55,6 +55,6 @@ function configure_samtfe() {
 
 _EOF_
     chmod +x "$md_inst/$md_id.sh"
-    chown -R $user:$user "/opt/retropie/ports/samtfe/tfe"
+    chown -R $__user:$__group "/opt/retropie/ports/samtfe/tfe"
     addPort "$md_id" "samtfe" "Serious Sam Classic The First Encounter" "XINIT: $script %ROM%"
 }

@@ -60,7 +60,7 @@ function build_mesa() {
     #TODO: Also check https://github.com/anholt/mesa/wiki/Raspberry-Pi-cross-compile for optimization possibilities
     # 6: Create the build directory and change to that directory:
     #mkdir $md_build/builddir
-    #cd /home/pi/mesa/build
+    #cd $home/mesa/build
 
     # 7: Now compile the new version of MESA:
     meson builddir --prefix="$md_inst" --libdir lib -Dplatforms=x11     -Dvulkan-drivers=broadcom -Ddri-drivers= -Dgallium-drivers=v3d,kmsro,vc4,virgl --buildtype debug
@@ -75,5 +75,5 @@ function install_mesa() {
     cd ..
 
     # The following line is to configure the location of Vulkan
-    echo export VK_ICD_FILENAMES="$md_inst"/share/vulkan/icd.d/broadcom_icd.armv7l.json >> /home/pi/.profile
+    echo export VK_ICD_FILENAMES="$md_inst"/share/vulkan/icd.d/broadcom_icd.armv7l.json >> $home/.profile
 }

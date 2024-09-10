@@ -56,5 +56,5 @@ function configure_pcexhumed() {
 	moveConfigDir "$home/.config/pcexhumed" "$md_conf_root/pcexhumed"
 	mkRomDir "ports/pcexhumed"
 	
-	addPort "$md_id" "pcexhumed" "PCExhumed - Powerslave source port" "XINIT: $md_inst/pcexhumed  -j /home/pi/RetroPie/roms/ports/pcexhumed"	
+	addPort "$md_id" "pcexhumed" "PCExhumed - Powerslave source port" "XINIT: $md_inst/pcexhumed  -j $home/RetroPie/roms/ports/pcexhumed"	
 }

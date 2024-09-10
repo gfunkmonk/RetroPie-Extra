@@ -48,7 +48,7 @@ function configure_lr-oberon() {
     mkRomDir "ports/oberon"
 
     cp -r "$md_inst/Oberon-2020-08-18.dsk" "$romdir/ports/oberon"
-    chown -R $user:$user "$romdir/ports/oberon"
+    chown -R $__user:$__group "$romdir/ports/oberon"
 
     addPort "$md_id" "oberon" "Oberon RISC" "$md_inst/oberon_libretro.so"
     local file="$romdir/ports/Oberon RISC.sh"
@@ -56,7 +56,7 @@ function configure_lr-oberon() {
 #!/bin/bash
 "$rootdir/supplementary/runcommand/runcommand.sh" 0 _PORT_ "oberon" "$romdir/ports/oberon/Oberon-2020-08-18.dsk"
 _EOF_
-    chown $user:$user "$file"
+    chown $__user:$__group "$file"
     chmod +x "$file"
 
     ensureSystemretroconfig "ports/oberon"

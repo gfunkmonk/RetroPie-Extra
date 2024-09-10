@@ -59,7 +59,7 @@ function install_bin_bgm123() {
     # create rp menu items
     cp -f "$md_data/icon.png" "$menudir/icons/$md_id.png"
     touch "$menudir/$md_id.rp"
-    chown -R $user:$user "$menudir"
+    chown -R $__user:$__group "$menudir"
 }
 
 function configure_bgm123() {
@@ -87,7 +87,7 @@ function configure_bgm123() {
     for file in "$autostart" "$bashrc" "$onstart" "$onend"; do
         if [[ -f "$file" && ! -f "$file.old.$md_id" ]]; then
             cp -v "$file" "$file.old.$md_id"
-            chown $user:$user "$file.old.$md_id"
+            chown $__user:$__group "$file.old.$md_id"
         fi
     done
 
@@ -140,7 +140,7 @@ function toggle_bgm123() {
     if [[ "$1" == "on" || "$1" == "enable"?("d") ]]; then
         for file in "$autostart" "$bashrc" "$onstart" "$onend"; do
             touch "$file"
-            chown $user:$user "$file"
+            chown $__user:$__group "$file"
         done
 
         iniConfig "=" '"' "$config"

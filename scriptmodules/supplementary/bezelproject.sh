@@ -22,7 +22,7 @@ function sources_bezelproject() {
 
 function install_bezelproject() {
     cp ./bezelproject.sh "$home/RetroPie/retropiemenu"
-    chown -R $user:$user "$datadir/retropiemenu"
+    chown -R $__user:$__group "$datadir/retropiemenu"
 }
 
 function remove_bezelproject() {

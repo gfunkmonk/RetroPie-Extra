@@ -54,7 +54,7 @@ function game_data_dhewm3() {
         downloadAndExtract "https://github.com/techcoder20/RPIDoom3Installer/releases/download/v1.0.0/Doom3DemoGameFiles.zip" "$romdir/ports/doom3/base"
     mv "$romdir/ports/doom3/base/Doom3Demo/demo/"* "$romdir/ports/doom3/base"
     rm -r "$romdir/ports/doom3/base/Doom3Demo"
-        chown -R pi:pi "$romdir/ports/doom3"
+        chown -R $__user:$__group "$romdir/ports/doom3"
     fi
 }
 

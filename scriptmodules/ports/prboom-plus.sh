@@ -46,7 +46,7 @@ function game_data_prboom-plus() {
     if [[ ! -f "$romdir/ports/doom/doom1.wad" ]]; then
         # download doom 1 shareware
         wget -nv -O "$romdir/ports/doom/doom1.wad" "$__archive_url/doom1.wad"
-        chown $user:$user "$romdir/ports/doom/doom1.wad"
+        chown $__user:$__group "$romdir/ports/doom/doom1.wad"
     fi
 }
 
@@ -83,5 +83,5 @@ function configure_prboom-plus() {
     add_games_prboom-plus
 
     cp prboom-plus.wad "$romdir/ports/doom/"
-    chown $user:$user "$romdir/ports/doom/prboom-plus.wad"
+    chown $__user:$__group "$romdir/ports/doom/prboom-plus.wad"
 }

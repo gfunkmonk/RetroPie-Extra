@@ -60,9 +60,9 @@ video/1/	.RPL or .FMV			Video cut-scenes
 video/2/	.RPL or .FMV			Video cut-scenes
 video/3/	.RPL or .FMV			Video cut-scenes
 _EOF_
-    chown $user:$user "$text"
+    chown $__user:$__group "$text"
 
-    chown $user:$user -R "$romdir/ports/tombraider"
+    chown $__user:$__group -R "$romdir/ports/tombraider"
 
     declare -A games=(
         ['1']="Tomb Raider"
@@ -100,7 +100,7 @@ else
     "/opt/retropie/supplementary/runcommand/runcommand.sh" 0 _PORT_ "tombraider" "$romdir/ports/tombraider/level/$dir/\${W[\$item]}"
 fi
 _EOF_
-            chown $user:$user "$file"
+            chown $__user:$__group "$file"
             chmod +x "$file"
         fi
     done
