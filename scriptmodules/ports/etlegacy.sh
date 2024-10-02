@@ -22,11 +22,11 @@ function _get_branch_etlegacy() {
     # manual:
     # 'curl https://api.github.com/repos/etlegacy/etlegacy/tags | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2'
 
-    download https://api.github.com/repos/etlegacy/etlegacy/tags - | grep -m 1 sha | cut -d\" -f4 |
-cut -dv -f2 }
+    download https://api.github.com/repos/etlegacy/etlegacy/tags - |
+        grep -m 1 sha | cut -d\" -f4 | cut -dv -f2
+}
 
 function _arch_etlegacy() {
-    # exact parsing from Makefile
     echo "$(uname -m | sed -e 's/i.86/x86/' | sed -e 's/^arm.*/arm/')"
 }
 
