@@ -12,7 +12,6 @@
 rp_module_id="etlegacy"
 rp_module_desc="etlegacy - ET: Legacy - A Fully compatable Wolfenstein: Enemy Territory Client and Server"
 rp_module_licence="GPL3 https://raw.githubusercontent.com/etlegacy/etlegacy/master/COPYING.txt"
-rp_module_help="Fix Me!"
 rp_module_section="exp"
 rp_module_repo="git https://github.com/etlegacy/etlegacy.git master :_get_branch_etlegacy"
 rp_module_flags="!64bit"

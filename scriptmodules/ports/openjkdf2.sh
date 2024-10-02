@@ -17,7 +17,7 @@ rp_module_help="Data must be installed manually.\nData for Jedi Knight - Dark Fo
 rp_module_licence="OTHER https://github.com/shinyquagsire23/OpenJKDF2/blob/master/LICENSE.md"
 rp_module_repo="git https://github.com/shinyquagsire23/OpenJKDF2.git v0.8.12"
 rp_module_section="exp"
-rp_module_flags="!all x86_64"
+rp_module_flags=""
 
 function depends_openjkdf2() {
     local depends=(build-essential cmake make python3 python3-pip bison imagemagick libgtk-3-dev
@@ -25,21 +25,29 @@ function depends_openjkdf2() {
     if isPlatform "64bit"; then
         depends+=(clang libsdl2-dev libsdl2-mixer-dev libopenal-dev libglew-dev libssl-dev
             libprotobuf-dev)
-    # else
-    #     # The following are also referenced in https://github.com/shinyquagsire23/OpenJKDF2/blob/master/BUILDING.md
-    #     # However, it appears they are invalid packages.
-    #     local depends=(
-    #         #multilib-devel lib32-sdl2 lib32-glew lib32-openal # ?
-    #     )
+    else
+        #     # The following are also referenced in https://github.com/shinyquagsire23/OpenJKDF2/blob/master/BUILDING.md
+        #     # However, it appears they are invalid packages.
+        #     local depends=(
+        #         #multilib-devel lib32-sdl2 lib32-glew lib32-openal # ?
+        #     )
+        depends+=(clang libsdl2-dev libsdl2-mixer-dev libopenal-dev libglew-dev libssl-dev
+            libprotobuf-dev)
     fi
+
     if compareVersions "$__os_debian_ver" gt 11 || compareVersions "$__os_ubuntu_ver" gt 21.10; then
         depends+=(libstdc++-12-dev)
     fi
 
+    if compareVersions "$__os_debian_ver" gt 12; then
+        depends+=(python-cogapp)
+    else
+        # NOTE: This dependency is in the debian repos for trixie (v13)
+        pip3 install cogapp
+    fi
+
     getDepends "${depends[@]}"
 
-    # NOTE: There is a python pypi dependency as well.
-    pip3 install cogapp
 }
 
 function sources_openjkdf2() {
