@@ -38,7 +38,7 @@ function sources_etlegacy() {
 }
 
 function build_etlegacy() {
-    local params=(-DCMAKE_BUILD_TYPE=Release)
+    local params=(-DCMAKE_BUILD_TYPE=Release -DBUNDLED_OPENSSL=0)
 
     if isPlatform "64bit"; then
         params+=(-DCROSS_COMPILE32=1)
