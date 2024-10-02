@@ -19,7 +19,7 @@ rp_module_section="exp"
 rp_module_flags="!all 64bit !rpi5"
 
 function depends_lr-boom3() {
-    getDepends libjpeg-turbo8-dev libvorbis-dev libogg-dev libopenal-dev libsdl2-dev libcurl4-openssl-dev
+    getDepends libjpeg-dev libvorbis-dev libogg-dev libopenal-dev libsdl2-dev libcurl4-openssl-dev
 }
 
 function _get_targets_lr-boom3() {

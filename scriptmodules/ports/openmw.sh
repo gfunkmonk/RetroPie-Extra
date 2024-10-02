@@ -16,7 +16,7 @@ rp_module_licence="GPL3 https://github.com/OpenMW/osg/blob/3.4/LICENSE.txt"
 rp_module_help="Copy\nMorrowind.esm\nBloodmoon.esm\nTribunal.esm\nFonts folder\nMusic folder\nSound folder\nin the morrowind Folder in above format.\nMAKE sure the video folder is not there, IT will crash. This takes 1HOUR 50MIN to build\n
 This will only run MAIN game if you want the expansions have them in a morrowind folder before you install"
 rp_module_section="exp"
-rp_module_flags="noinstclean !all rpi4 rpi3"
+rp_module_flags="noinstclean !all rpi4 rpi3 x86"
 
 function depends_openmw() {
    getDepends cmake build-essential libopenal-dev libopenscenegraph-3.4-dev libsdl2-dev libqt4-dev libboost-filesystem-dev libboost-thread-dev libboost-program-options-dev libboost-system-dev libboost-iostreams-dev libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libswresample-dev libbullet-dev libmygui-dev libunshield-dev libqt4-opengl-dev libtinyxml-dev xorg matchbox

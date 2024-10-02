@@ -64,7 +64,7 @@ function install_bin_ut() {
     downloadAndExtract "$dl_url" "$md_inst" "--no-same-owner"
 }
 
-function __config_game_data() {
+function __config_game_data_ut() {
     local ut_game_dir=$1
 
     if [[ ! -d "$romdir/ports/ut/$ut_game_dir" ]]; then
@@ -105,7 +105,7 @@ function game_data_ut() {
         # Ensure we aren't moving files that are already in place.
         # Eliminates 'mv: '$src/$file' and '$dst/$file' are the same file' errors.
         if [[ ! -h "$md_inst/$dir" ]]; then
-            __config_game_data "$dir"
+            __config_game_data_ut "$dir"
         fi
     done
 
