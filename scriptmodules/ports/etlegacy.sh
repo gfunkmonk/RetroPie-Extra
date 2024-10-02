@@ -8,9 +8,17 @@
 # See the LICENSE.md file at the top-level directory of this distribution and
 # at https://raw.githubusercontent.com/RetroPie/RetroPie-Setup/master/LICENSE.md
 #
+#
+# https://github.com/etlegacy/etlegacy/wiki/FAQ#i-want-to-play-et-legacy-on-my-linux-system-which-version-should-i-use-32-or-64-bit
+#
+# It depends. If you only want to play Legacy mod, or one of the other mods provided in 64 bit,
+# install the 64 bit version. If you want to be able to play third party mods that are only
+# available in 32 bit, install the 32 bit version. In that case, you will have to install all
+# required libs in 32 bits, including the entire graphics stack.
 
 rp_module_id="etlegacy"
 rp_module_desc="etlegacy - ET: Legacy - A Fully compatable Wolfenstein: Enemy Territory Client and Server"
+rp_module_help="This installs the 32bit version of ET: Legacy.  Per their website, this SHOULD work perfectly on a 64bit machine.  However, there are build conflicts that require help to get working properly."
 rp_module_licence="GPL3 https://raw.githubusercontent.com/etlegacy/etlegacy/master/COPYING.txt"
 rp_module_section="exp"
 rp_module_repo="git https://github.com/etlegacy/etlegacy.git master :_get_branch_etlegacy"
@@ -26,11 +34,11 @@ function _get_branch_etlegacy() {
 }
 
 function _arch_etlegacy() {
-    echo "$(uname -m | sed -e 's/i.86/x86/' | sed -e 's/^arm.*/arm/')"
+    echo "$(uname -m)"
 }
 
 function depends_etlegacy() {
-    getDepends cmake #libsdl1-dev libopenal-dev libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
+    getDepends cmake libssl-dev #libsdl1-dev libopenal-dev libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
 }
 
 function sources_etlegacy() {
