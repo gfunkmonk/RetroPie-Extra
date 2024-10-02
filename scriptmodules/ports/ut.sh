@@ -104,7 +104,7 @@ function game_data_ut() {
 
         # Ensure we aren't moving files that are already in place.
         # Eliminates 'mv: '$src/$file' and '$dst/$file' are the same file' errors.
-        if [[ ! -h "$md_inst/$dir" ]]; then
+        if [[ ! -L "$md_inst/$dir" ]]; then
             __config_game_data_ut "$dir"
         fi
     done
@@ -113,8 +113,8 @@ function game_data_ut() {
     downloadAndExtract "$bonus_pack_4_url" "$romdir/ports/ut/"
 
     chown -R "$__user":"$__group" "$romdir/ports/ut"
-    find  "$romdir/ports/ut" -type f -exec chmod 644 {} \;
-    find  "$romdir/ports/ut" -type d -exec chmod 755 {} \;
+    find "$romdir/ports/ut" -type f -exec chmod 644 {} \;
+    find "$romdir/ports/ut" -type d -exec chmod 755 {} \;
 
 }
 

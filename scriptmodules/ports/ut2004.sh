@@ -26,7 +26,7 @@ function depends_ut2004() {
 function install_bin_ut2004() {
     # Alternative URL "https://ut2004.ut-files.com/index.php?dir=UT2004\&file=ut2004-lnxpatch3369-2.tar.tar"
     local dl_url="https://treefort.icculus.org/ut2004/ut2004-lnxpatch3369-2.tar.bz2"
-    downloadAndExtract "$dl_url" "$md_inst"  --no-same-owner --strip-components=1
+    downloadAndExtract "$dl_url" "$md_inst" --no-same-owner --strip-components=1
 }
 
 function __config_game_dirs() {
@@ -57,8 +57,6 @@ function __config_game_dirs() {
     ln -snf "$romdir/ports/ut2004/$ut2004_game_dir" "$md_inst/$ut2004_game_dir"
 
 }
-
-
 
 function game_data() {
     # Alternative URL "https://ut2004.ut-files.com/index.php?dir=BonusPacks\&file=ut2004megapack-linux.tar.bz2"

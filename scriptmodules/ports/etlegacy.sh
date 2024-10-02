@@ -22,8 +22,8 @@ function _get_branch_etlegacy() {
     # manual:
     # 'curl https://api.github.com/repos/etlegacy/etlegacy/tags | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2'
 
-    download https://api.github.com/repos/etlegacy/etlegacy/tags - | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2
-}
+    download https://api.github.com/repos/etlegacy/etlegacy/tags - | grep -m 1 sha | cut -d\" -f4 |
+cut -dv -f2 }
 
 function _arch_etlegacy() {
     # exact parsing from Makefile

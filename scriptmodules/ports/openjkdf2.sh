@@ -21,10 +21,10 @@ rp_module_flags="!all x86_64"
 
 function depends_openjkdf2() {
     local depends=(build-essential cmake make python3 python3-pip bison imagemagick libgtk-3-dev
-                   protobuf-compiler zsh)
+        protobuf-compiler zsh)
     if isPlatform "64bit"; then
         depends+=(clang libsdl2-dev libsdl2-mixer-dev libopenal-dev libglew-dev libssl-dev
-                  libprotobuf-dev)
+            libprotobuf-dev)
     # else
     #     # The following are also referenced in https://github.com/shinyquagsire23/OpenJKDF2/blob/master/BUILDING.md
     #     # However, it appears they are invalid packages.
@@ -35,8 +35,6 @@ function depends_openjkdf2() {
     if compareVersions "$__os_debian_ver" gt 11 || compareVersions "$__os_ubuntu_ver" gt 21.10; then
         depends+=(libstdc++-12-dev)
     fi
-
-
 
     getDepends "${depends[@]}"
 
