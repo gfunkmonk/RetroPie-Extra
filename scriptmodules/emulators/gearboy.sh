@@ -15,7 +15,7 @@ rp_module_desc="Gearboy - Gameboy & Gameboy Color Emulator"
 rp_module_licence="GPL3 https://raw.githubusercontent.com/drhelius/Gearboy/master/LICENSE"
 rp_module_section="exp"
 rp_module_repo="git https://github.com/DrHelius/GearBoy.git master"
-rp_module_flags="!x86"
+rp_module_flags=""
 
 function depends_gearboy() {
     getDepends build-essential libsdl2-dev libglew-dev libgtk-3-dev

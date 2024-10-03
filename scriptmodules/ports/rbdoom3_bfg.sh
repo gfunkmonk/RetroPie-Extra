@@ -26,11 +26,11 @@ function _arch_rbdoom3_bfg() {
 }
 
 function depends_rbdoom3_bfg() {
-    local depends=(cmake libavcodec-dev libavformat-dev libavutil-dev libopenal-dev libsdl2-dev)
-    depnds+=(libswscale-dev)
+    local depends=(cmake libavcodec-dev libavformat-dev libavutil-dev libsdl2-dev libopenal-dev)
+    depends+=(libswscale-dev libglew-dev zlib1g-dev libpng-dev rapidjson-dev libjpeg-dev)
 
-    if isPlatform "rpi"; then
-        depends+=(libglew-dev libimgui-dev libjpeg-dev libpng-dev rapidjson-dev zlib1g-dev)
+    if compareVersions "$__os_debian_ver" gt 10; then
+        depends+=(libimgui-dev)
     fi
 
     getDepends "${depends[@]}"
@@ -48,9 +48,7 @@ function build_rbdoom3_bfg() {
         # variable that responds with those two values and only those values?  Might be a way to
         # simplify this.
         # NOTE: I am guessing on DCPU_TYPE for 64bit
-        params+=(-G 'Unix Makefiles' -DUSE_SYSTEM_ZLIB=ON -DUSE_SYSTEM_LIBPNG=ON)
-        params+=(-DUSE_SYSTEM_LIBJPEG=ON -DUSE_SYSTEM_LIBGLEW=ON -DUSE_SYSTEM_IMGUI=ON)
-        params+=(-DUSE_SYSTEM_RAPIDJSON=ON -DUSE_PRECOMPILED_HEADERS=OFF)
+        params+=(-G 'Unix Makefiles' -DUSE_PRECOMPILED_HEADERS=OFF)
         params+=(-DCPU_OPTIMIZATION='' -DUSE_INTRINSICS_SSE=OFF)
 
         if isPlatform "64bit"; then
@@ -62,7 +60,12 @@ function build_rbdoom3_bfg() {
         params+=(-G 'Eclipse CDT4 - Unix Makefiles' -DCMAKE_BUILD_TYPE=RelWithDebInfo)
     fi
 
-    params+=(-DSDL2=ON)
+    if compareVersions "$__os_debian_ver" gt 10; then
+        params+=(-DUSE_SYSTEM_IMGUI=ON)
+    fi
+
+    params+=(-DSDL2=ON -DUSE_SYSTEM_ZLIB=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_RAPIDJSON=ON)
+    params+=(-DUSE_SYSTEM_LIBGLEW=ON -DUSE_SYSTEM_LIBJPEG=ON)
 
     if [[ -d $md_build/build ]]; then
         cd $md_build
