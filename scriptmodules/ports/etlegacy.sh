@@ -95,11 +95,14 @@ function install_etlegacy() {
     md_ret_files=(
         "build/etl.$(_arch_etlegacy)"
         "build/etlded.$(_arch_etlegacy)"
-        "build/librenderer_opengl1_$(_arch_etlegacy).so"
         "build/legacy/cgame.mp.$(_arch_etlegacy).so"
         "build/legacy/ui.mp.$(_arch_etlegacy).so"
         "build/legacy/qagame.mp.$(_arch_etlegacy).so"
     )
+
+    if ! isPlatform "rpi"; then
+        md_ret_files+="build/librenderer_opengl1_$(_arch_etlegacy).so"
+    fi
 }
 
 function game_data_etlegacy() {
