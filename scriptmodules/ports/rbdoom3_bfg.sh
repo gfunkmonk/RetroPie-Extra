@@ -127,6 +127,7 @@ function configure_rbdoom3_bfg() {
     mkRomDir "ports/doom3_bfg"
 
     moveConfigDir "$md_inst/base" "$romdir/ports/doom3_bfg"
+    moveConfigDir "$home/.local/share/rbdoom3bfg" "$md_conf_root/rbdoom3bfg"
 
     if [[ "$md_mode" == "install" ]]; then
         mkdir /opt/retropie/ports/rbdoom3_bfg/base/

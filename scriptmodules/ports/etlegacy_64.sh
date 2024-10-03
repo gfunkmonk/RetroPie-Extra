@@ -17,12 +17,8 @@ rp_module_section="exp"
 rp_module_repo="git https://github.com/etlegacy/etlegacy.git master :_get_branch_etlegacy"
 rp_module_flags="!all 64bit"
 
-function _get_branch_etlegacy_64() {
-    download https://api.github.com/repos/etlegacy/etlegacy/tags - | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2
-}
-
 function depends_etlegacy_64() {
-    getDepends cmake libsdl2-dev libopenal-dev
+    depends_etlegacy
 }
 
 function sources_etlegacy_64() {
@@ -30,7 +26,9 @@ function sources_etlegacy_64() {
 }
 
 function build_etlegacy_64() {
-    local params=(-DCMAKE_BUILD_TYPE=Release)
+    local params
+    params=$(_get_etlagcy_base_params)
+
     params+=(-DCROSS_COMPILE32=0)
 
     if isPlatform "rpi"; then

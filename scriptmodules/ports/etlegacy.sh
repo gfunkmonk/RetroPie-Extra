@@ -27,18 +27,36 @@ rp_module_flags="!64bit"
 function _get_branch_etlegacy() {
     # Tested tag was 2.82.1 commit 0a24c70
     # manual:
-    # 'curl https://api.github.com/repos/etlegacy/etlegacy/tags | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2'
+    # 'curl https://api.github.com/repos/etlegacy/etlegacy/tags | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2 | cut -7'
 
-    download https://api.github.com/repos/etlegacy/etlegacy/tags - |
-        grep -m 1 sha | cut -d\" -f4 | cut -dv -f2
+    local version
+    local release_url
+
+    release_url="https://api.github.com/repos/etlegacy/etlegacy/tags"
+    version=$(download "$release_url" - | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2 | cut -7)
+
+    echo -ne "$version"
 }
 
 function _arch_etlegacy() {
     echo -ne "$(uname -m)"
 }
 
+function _get_etlagcy_base_params() {
+    local params=(-DCMAKE_BUILD_TYPE=Release -DBUNDLED_OPENSSL=0 -DBUNDLED_JPEG=0 -DBUNDLED_ZLIB=0)
+    params+=(-DBUNDLED_OPENAL=0 -DBUNDLED_SDL=0 -DBUNDLED_PNG=0 -BUNDLED_GLEW=0)
+
+    echo -ne "${params[@]}"
+}
+
 function depends_etlegacy() {
-    getDepends cmake libssl-dev #libsdl1-dev libopenal-dev libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
+    # Theoretically needs:
+    #libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
+
+    local depends=(cmake libopenal-dev libssl-dev libjpeg-dev zlib1g-dev libsdl2-dev libpng-dev)
+    depnds+=(libglew-dev)
+
+    getDepends "$depends[@]"
 }
 
 function sources_etlegacy() {
@@ -46,7 +64,8 @@ function sources_etlegacy() {
 }
 
 function build_etlegacy() {
-    local params=(-DCMAKE_BUILD_TYPE=Release -DBUNDLED_OPENSSL=0)
+    local params
+    params="$(_get_etlagcy_base_params)"
 
     if isPlatform "64bit"; then
         params+=(-DCROSS_COMPILE32=1)

@@ -39,8 +39,11 @@ rp_module_flags="!all x86 64bit"
 
 function _get_branch_ut() {
     local version
+    local release_url
 
-    version=$(curl https://api.github.com/repos/OldUnreal/UnrealTournamentPatches/releases/latest 2>&1 | grep -m 1 tag_name | cut -d\" -f4 | cut -dv -f2)
+    release_url="https://api.github.com/repos/OldUnreal/UnrealTournamentPatches/releases/latest"
+    version=$(curl "$release_url" 2>&1 | grep -m 1 tag_name | cut -d\" -f4 | cut -dv -f2)
+
     echo -ne "$version"
 }
 
