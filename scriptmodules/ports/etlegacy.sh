@@ -33,7 +33,7 @@ function _get_branch_etlegacy() {
     local release_url
 
     release_url="https://api.github.com/repos/etlegacy/etlegacy/tags"
-    version=$(download "$release_url" - | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2 | cut -7)
+    version=$(download "$release_url" - | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2 | cut -c -7)
 
     echo -ne "$version"
 }
