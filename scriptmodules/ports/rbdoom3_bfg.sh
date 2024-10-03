@@ -84,8 +84,6 @@ function build_rbdoom3_bfg() {
     if [[ "$rbdoom3_version" != "v1.2.0" ]]; then
         if compareVersions "$__os_debian_ver" gt 10; then
             params+=(-DUSE_SYSTEM_IMGUI=ON)
-        else
-            params+=(-DUSE_SYSTEM_IMGUI=OFF)
         fi
     fi
 
