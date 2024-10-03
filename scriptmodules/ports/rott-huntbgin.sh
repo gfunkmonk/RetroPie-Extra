@@ -16,10 +16,21 @@ rp_module_licence="GPL2 https://raw.githubusercontent.com/LTCHIPS/rottexpr/maste
 rp_module_help=
 rp_module_repo="git https://github.com/LTCHIPS/rottexpr.git master"
 rp_module_section="exp"
-rp_module_flags="!mali !x86 !all rpi4 rpi3"
+rp_module_flags="!all rpi4 rpi3 x86"
 
 function depends_rott-huntbgin() {
-    getDepends libsdl2-dev libsdl2-mixer-dev fluidsynth libfluidsynth1 libfluidsynth-dev fluid-soundfont-gs fluid-soundfont-gm
+    local depends=(libsdl2-dev libsdl2-mixer-dev fluidsynth libfluidsynth-dev)
+    depends+=(fluid-soundfont-gs fluid-soundfont-gm)
+
+    if compareVersions "$__os_debian_ver" lt 11; then
+        depends+=(libfluidsynth1)
+    elif compareVersions "$__os_debian_ver" eq 11; then
+        depends+=(libfluidsynth2)
+    else
+        depends+=(libfluidsynth3)
+    fi
+
+    getDepends "${depends[@]}"
 }
 
 function sources_rott-huntbgin() {
@@ -36,20 +47,20 @@ function build_rott-huntbgin() {
 }
 
 function install_rott-huntbgin() {
-   md_ret_files=(
-          'src/rott'
+    md_ret_files=(
+        'src/rott'
     )
 }
 
 function game_data_rott-huntbgin() {
     if [[ ! -f "$romdir/ports/rott/HUNTBGIN.WAD" ]]; then
         downloadAndExtract "https://github.com/Exarkuniv/game-data/raw/main/HUNTBGIN.zip" "$romdir/ports/rott"
-    mv "$romdir/ports/rott/HUNTBGIN/"* "$romdir/ports/rott/"
-    rmdir "$romdir/ports/rott/HUNTBGIN/"
-    chown -R $__user:$__group "$romdir/ports/rott"
+        mv "$romdir/ports/rott/HUNTBGIN/"* "$romdir/ports/rott/"
+        rmdir "$romdir/ports/rott/HUNTBGIN/"
+        chown -R "$__user":"$__group" "$romdir/ports/rott"
     fi
 
-    chown -R $__user:$__group "$romdir/ports/rott"
+    chown -R "$__user":"$__group" "$romdir/ports/rott"
 }
 
 function configure_rott-huntbgin() {
@@ -57,15 +68,15 @@ function configure_rott-huntbgin() {
     mkRomDir "ports"
     mkRomDir "ports/rott"
     moveConfigDir "$home/.rott" "$md_conf_root/rott"
-	#create buffer script for launch
- cat > "$script" << _EOF_
+    #create buffer script for launch
+    cat >"$script" <<_EOF_
 #!/bin/bash
 pushd "$romdir/ports/rott"
 "$md_inst/rott" \$*
 popd
 _EOF_
-    
-	chmod +x "$script"
+
+    chmod +x "$script"
     addPort "$md_id" "rott-huntbgin" "Rise Of The Triad - The Hunt Begins (Shareware)" "$script"
 
     [[ "$md_mode" == "install" ]] && game_data_rott-huntbgin

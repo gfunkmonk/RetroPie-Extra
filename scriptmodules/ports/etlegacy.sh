@@ -56,6 +56,10 @@ function depends_etlegacy() {
     depends+=(libglew-dev libsqlite3-dev libcurl4-openssl-dev libglew-dev libfreetype6-dev)
     depends+=(libminizip-dev libogg-dev libtheora-dev)
 
+    if isPlatform "rpi"; then
+        depnds+=(xorg)
+    fi
+
     getDepends "${depends[@]}"
 }
 

@@ -10,7 +10,6 @@
 # https://raw.githubusercontent.com/Exarkuniv/RetroPie-Extra/master/LICENSE
 #
 
-
 rp_module_id="rott-darkwar"
 rp_module_desc="ROTT - Rise of the Triad - Dark War"
 rp_module_licence="GPL2 https://raw.githubusercontent.com/LTCHIPS/rottexpr/master/LICENSE.DOC"
@@ -20,7 +19,8 @@ rp_module_section="exp"
 rp_module_flags="!all rpi4 rpi3 x86"
 
 function depends_rott-darkwar() {
-    local depends=(libsdl2-dev libsdl2-mixer-dev fluidsynth libfluidsynth-dev fluid-soundfont-gs fluid-soundfont-gm)
+    local depends=(libsdl2-dev libsdl2-mixer-dev fluidsynth libfluidsynth-dev)
+    depnds+=(fluid-soundfont-gs fluid-soundfont-gm)
 
     if compareVersions "$__os_debian_ver" lt 11; then
         depends+=(libfluidsynth1)
@@ -41,13 +41,13 @@ function build_rott-darkwar() {
     cd src
     make rott
     md_ret_require=(
-       "$md_build/src/rott"
+        "$md_build/src/rott"
     )
 }
 
 function install_rott-darkwar() {
-   md_ret_files=(
-          'src/rott'
+    md_ret_files=(
+        'src/rott'
     )
 }
 
@@ -56,14 +56,14 @@ function configure_rott-darkwar() {
     mkRomDir "ports"
     mkRomDir "ports/rott"
     moveConfigDir "$home/.rott" "$md_conf_root/rott"
-	#create buffer script for launch
- cat > "$script" << _EOF_
+    #create buffer script for launch
+    cat >"$script" <<_EOF_
 #!/bin/bash
 pushd "$romdir/ports/rott"
 "$md_inst/rott" \$*
 popd
 _EOF_
-    
-	chmod +x "$script"
+
+    chmod +x "$script"
     addPort "$md_id" "rott-darkwar" "Rise Of The Triad - Dark War" "$script"
 }

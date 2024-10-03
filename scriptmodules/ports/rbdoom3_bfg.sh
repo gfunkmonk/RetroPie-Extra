@@ -48,6 +48,10 @@ function depends_rbdoom3_bfg() {
         depends+=(libimgui-dev)
     fi
 
+    if isPlatform "rpi"; then
+        depnds+=(xorg)
+    fi
+
     getDepends "${depends[@]}"
 }
 
