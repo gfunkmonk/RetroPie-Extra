@@ -44,7 +44,9 @@ function _arch_etlegacy() {
 
 function _get_etlagcy_base_params() {
     local params=(-DCMAKE_BUILD_TYPE=Release -DBUNDLED_OPENSSL=0 -DBUNDLED_JPEG=0 -DBUNDLED_ZLIB=0)
-    params+=(-DBUNDLED_OPENAL=0 -DBUNDLED_SDL=0 -DBUNDLED_PNG=0 -BUNDLED_GLEW=0)
+    params+=(-DBUNDLED_OPENAL=0 -DBUNDLED_SDL=0 -DBUNDLED_PNG=0 -BUNDLED_GLEW=0 -DBUNDLED_SQLITE3=0)
+    params+=(-DBUNDLED_CURL=0 -DBUNDLED_GLEW=0 -DBUNDLED_FREETYPE=0 -DBUNDLED_MINIZIP=0)
+    params+=(-DBUNDLED_OGG_VORBIS=0 -DBUNDLED_THEORA=0)
 
     echo -ne "${params[@]}"
 }
@@ -54,7 +56,8 @@ function depends_etlegacy() {
     #libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
 
     local depends=(cmake libopenal-dev libssl-dev libjpeg-dev zlib1g-dev libsdl2-dev libpng-dev)
-    depnds+=(libglew-dev)
+    depends+=(libglew-dev libsqlite3-dev libcurl4-openssl-dev libglew-dev libfreetype6-dev)
+    depends+=(libminizip-dev libogg-dev libtheora-dev)
 
     getDepends "${depends[@]}"
 }
@@ -74,7 +77,8 @@ function build_etlegacy() {
     fi
 
     if isPlatform "rpi"; then
-        params+=(-DARM=1)
+        params+=(-DARM=1 -DFEATURE_RENDERER_GLES=0 -DRENDERER_DYNAMIC=0 -DFEATURE_RENDERER2=0)
+        params+=(-DINSTALL_OMNIBOT=0)
     fi
 
     mkdir "$md_build/build"
