@@ -34,7 +34,7 @@ function _get_branch_etlegacy() {
 }
 
 function _arch_etlegacy() {
-    echo "$(uname -m)"
+    echo -ne "$(uname -m)"
 }
 
 function depends_etlegacy() {
@@ -89,12 +89,22 @@ function game_data_etlegacy() {
 }
 
 function configure_etlegacy() {
-    addPort "$md_id" "etlegacy" "Wolfenstein - Enemy Territory" "$md_inst/etl.$(_arch_etlegacy)"
+    local launch_prefix
+    local launcher_cmd
+
+    if ! isPlatform "x86"; then
+        local launch_prefix="XINIT-WM:"
+    fi
+
+    launcher_cmd="$launch_prefix$md_inst/etl.$(_arch_etlegacy)"
+    addPort "$md_id" "etlegacy" "Wolfenstein - Enemy Territory" "$launcher_cmd"
 
     mkRomDir "ports/etlegacy"
 
     moveConfigDir "$md_inst/etmain" "$romdir/ports/etlegacy"
     [[ "$md_mode" == "install" ]] && game_data_etlegacy
+
+    moveConfigDir "$home/.etlegacy" "$md_conf_root/etlegacy"
 
     mkdir $md_inst/legacy
     mv $md_inst/cgame.mp.$(_arch_etlegacy).so $md_inst/legacy/

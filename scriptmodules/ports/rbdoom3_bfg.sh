@@ -18,8 +18,26 @@ rp_module_desc="rbdoom3_bfg - Doom 3: BFG Edition"
 rp_module_licence="GPL3 https://raw.githubusercontent.com/RobertBeckebans/RBDOOM-3-BFG/master/LICENSE.md"
 rp_module_help="For the game data, from your windows install (Gog or Steam) locate the 'base' directory.  Copy ALL contents to $romdir/ports/doom3_bfg"
 rp_module_section="exp"
-rp_module_repo="git https://github.com/RobertBeckebans/RBDOOM-3-BFG.git v1.4.0"
+rp_module_repo="git https://github.com/RobertBeckebans/RBDOOM-3-BFG.git :_get_branch_rbdoom3_bfg"
 rp_module_flags=""
+
+function _get_branch_rbdoom3_bfg() {
+    local version="v1.4.0"
+
+    if compareVersions "$__os_debian_ver" eq 10; then
+        version="v1.4.0"
+    elif compareVersions "$__os_debian_ver" gt 10; then
+        if isPlatform "rpi"; then
+            version="v1.4.0"
+        # else
+        #     local release_url
+        #     release_url="https://api.github.com/repos/RobertBeckebans/RBDOOM-3-BFG/releases/latest"
+        #     version=$(curl $release_url 2>&1 | grep -m 1 tag_name | cut -d\" -f4 | cut -dv -f2)
+        fi
+    fi
+
+    echo -ne "$version"
+}
 
 function _arch_rbdoom3_bfg() {
     return "$(uname -m | sed -e 's/i.86/x86/' | sed -e 's/^arm.*/arm/')"
@@ -42,6 +60,9 @@ function sources_rbdoom3_bfg() {
 
 function build_rbdoom3_bfg() {
     local params=()
+    local rbdoom3_version
+
+    rbdoom3_version=$(_get_branch_rbdoom3_bfg)
 
     if isPlatform "rpi"; then
         # DCPU_TYPE is the only value to change: armhf for 32bit and aarch64 for 64bit  Is there a
@@ -60,8 +81,12 @@ function build_rbdoom3_bfg() {
         params+=(-G 'Eclipse CDT4 - Unix Makefiles' -DCMAKE_BUILD_TYPE=RelWithDebInfo)
     fi
 
-    if compareVersions "$__os_debian_ver" gt 10; then
-        params+=(-DUSE_SYSTEM_IMGUI=ON)
+    if [[ "$rbdoom3_version" != "v1.2.0" ]]; then
+        if compareVersions "$__os_debian_ver" gt 10; then
+            params+=(-DUSE_SYSTEM_IMGUI=ON)
+        else
+            params+=(-DUSE_SYSTEM_IMGUI=OFF)
+        fi
     fi
 
     params+=(-DSDL2=ON -DUSE_SYSTEM_ZLIB=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_RAPIDJSON=ON)
@@ -94,7 +119,12 @@ function install_rbdoom3_bfg() {
 }
 
 function configure_rbdoom3_bfg() {
-    addPort "$md_id" "doom3_bfg" "Doom 3 (BFG Edition)" "$md_inst/RBDoom3BFG"
+    local launch_prefix=""
+    if ! isPlatform "x86"; then
+        launch_prefix="XINIT-WM:"
+    fi
+
+    addPort "$md_id" "doom3_bfg" "Doom 3 (BFG Edition)" "$launch_prefix$md_inst/RBDoom3BFG"
 
     mkRomDir "ports/doom3_bfg"
 
@@ -102,6 +132,7 @@ function configure_rbdoom3_bfg() {
 
     if [[ "$md_mode" == "install" ]]; then
         mkdir /opt/retropie/ports/rbdoom3_bfg/base/
-        mkdir "$home/.doom3/base"
+        mkdir -p "$home/.doom3/base"
     fi
+
 }

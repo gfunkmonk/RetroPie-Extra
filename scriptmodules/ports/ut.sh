@@ -34,12 +34,14 @@ Ensure the Fullscreen* Variables match your resolution.
 Note: Some display problems may be solved by removing '$md_inst/System64/libSDL2-2.0.so.0' and creating a symlink pointing to the system libSDL2-2.0.so.0, eg '/usr/lib/$(uname -m)-linux-gnu/libSDL2-2.0.so.0'  This is not a guarantee, but if you have trouble, start with this.
 "
 rp_module_section="exp"
-rp_module_repo="https://github.com/OldUnreal/UnrealTournamentPatches/"
+rp_module_repo="git https://github.com/OldUnreal/UnrealTournamentPatches.git :_get_branch_ut"
 rp_module_flags="!all x86 64bit"
 
 function _get_branch_ut() {
-    local version=$(curl https://api.github.com/repos/OldUnreal/UnrealTournamentPatches/releases/latest 2>&1 | grep -m 1 tag_name | cut -d\" -f4 | cut -dv -f2)
-    echo -ne $version
+    local version
+
+    version=$(curl https://api.github.com/repos/OldUnreal/UnrealTournamentPatches/releases/latest 2>&1 | grep -m 1 tag_name | cut -d\" -f4 | cut -dv -f2)
+    echo -ne "$version"
 }
 
 function depends_ut() {
@@ -50,8 +52,11 @@ function depends_ut() {
 }
 
 function install_bin_ut() {
-    local version="$(_get_branch_ut)"
-    local arch="$(dpkg --print-architecture)"
+    local version
+    local arch
+
+    version="$(_get_branch_ut)"
+    arch="$(dpkg --print-architecture)"
 
     # For some reason, it failed when using "$rp_module_repo", this works perfectly.
     local base_url="https://github.com/OldUnreal/UnrealTournamentPatches"
