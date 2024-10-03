@@ -21,21 +21,18 @@ rp_module_desc="etlegacy - ET: Legacy - A Fully compatable Wolfenstein: Enemy Te
 rp_module_help="This installs the 32bit version of ET: Legacy.  Per their website, this SHOULD work perfectly on a 64bit machine.  However, there are build conflicts that require help to get working properly."
 rp_module_licence="GPL3 https://raw.githubusercontent.com/etlegacy/etlegacy/master/COPYING.txt"
 rp_module_section="exp"
-rp_module_repo="git https://github.com/etlegacy/etlegacy.git master :_get_branch_etlegacy"
+rp_module_repo="git https://github.com/etlegacy/etlegacy.git :_get_branch_etlegacy"
 rp_module_flags="!64bit"
 
 function _get_branch_etlegacy() {
     # Tested tag was 2.82.1 commit 0a24c70
-    # manual:
-    # 'curl https://api.github.com/repos/etlegacy/etlegacy/tags | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2 | cut -7'
-
     local version
     local release_url
 
     release_url="https://api.github.com/repos/etlegacy/etlegacy/tags"
-    version=$(download "$release_url" - | grep -m 1 sha | cut -d\" -f4 | cut -dv -f2 | cut -c -7)
+    version=$(curl "$release_url" 2>&1 | grep -m 1 name | cut -d\" -f4 | cut -dv -f2)
 
-    echo -ne "$version"
+    echo -ne "v${version}"
 }
 
 function _arch_etlegacy() {
@@ -43,10 +40,11 @@ function _arch_etlegacy() {
 }
 
 function _get_etlagcy_base_params() {
-    local params=(-DCMAKE_BUILD_TYPE=Release -DBUNDLED_OPENSSL=0 -DBUNDLED_JPEG=0 -DBUNDLED_ZLIB=0)
-    params+=(-DBUNDLED_OPENAL=0 -DBUNDLED_SDL=0 -DBUNDLED_PNG=0 -BUNDLED_GLEW=0 -DBUNDLED_SQLITE3=0)
-    params+=(-DBUNDLED_CURL=0 -DBUNDLED_GLEW=0 -DBUNDLED_FREETYPE=0 -DBUNDLED_MINIZIP=0)
-    params+=(-DBUNDLED_OGG_VORBIS=0 -DBUNDLED_THEORA=0)
+    local params=(-DCMAKE_BUILD_TYPE=Release)
+    # -DBUNDLED_OPENSSL=0 -DBUNDLED_CURL=0 -DBUNDLED_JPEG=0 -DBUNDLED_ZLIB=0)
+    #params+=(-DBUNDLED_OPENAL=0 -DBUNDLED_SDL=0 -DBUNDLED_PNG=0 -BUNDLED_GLEW=0 -DBUNDLED_SQLITE3=0)
+    #params+=(-DBUNDLED_GLEW=0 -DBUNDLED_FREETYPE=0 -DBUNDLED_MINIZIP=0)
+    #params+=(-DBUNDLED_OGG_VORBIS=0 -DBUNDLED_THEORA=0)
 
     echo -ne "${params[@]}"
 }
@@ -54,7 +52,6 @@ function _get_etlagcy_base_params() {
 function depends_etlegacy() {
     # Theoretically needs:
     #libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
-
     local depends=(cmake libopenal-dev libssl-dev libjpeg-dev zlib1g-dev libsdl2-dev libpng-dev)
     depends+=(libglew-dev libsqlite3-dev libcurl4-openssl-dev libglew-dev libfreetype6-dev)
     depends+=(libminizip-dev libogg-dev libtheora-dev)
@@ -85,7 +82,6 @@ function build_etlegacy() {
     cd "$md_build/build"
 
     cmake "${params[@]}" ..
-    make clean
     make
 
     md_ret_require="$md_build/build/etl.$(_arch_etlegacy)"

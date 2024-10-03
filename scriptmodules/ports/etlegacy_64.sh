@@ -12,9 +12,8 @@
 rp_module_id="etlegacy_64"
 rp_module_desc="etlegacy_64 - ET: Legacy - A Fully compatable Wolfenstein: Enemy Territory Client and Server"
 rp_module_licence="https://raw.githubusercontent.com/etlegacy/etlegacy/master/COPYING.txt"
-rp_module_help=""
 rp_module_section="exp"
-rp_module_repo="git https://github.com/etlegacy/etlegacy.git master :_get_branch_etlegacy"
+rp_module_repo="git https://github.com/etlegacy/etlegacy.git :_get_branch_etlegacy"
 rp_module_flags="!all 64bit"
 
 function depends_etlegacy_64() {
@@ -38,9 +37,8 @@ function build_etlegacy_64() {
 
     mkdir "$md_build/build"
     cd "$md_build/build"
-    cmake "${params[@]}" ..
 
-    make clean
+    cmake "${params[@]}" ..
     make
 
     md_ret_require="$md_build/build/etl.$(_arch_etlegacy)"

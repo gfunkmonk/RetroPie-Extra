@@ -24,7 +24,7 @@ function _get_branch_rbdoom3_bfg() {
     local version="v1.4.0"
 
     if compareVersions "$__os_debian_ver" eq 10; then
-        version="v1.2.0"
+        version="1.3.0"
         # elif compareVersions "$__os_debian_ver" gt 10; then
         #   if isPlatform "x86_64"; then
         #     local release_url
