@@ -9,10 +9,6 @@
 # at https://raw.githubusercontent.com/RetroPie/RetroPie-Setup/master/LICENSE.md
 #
 
-# NOTE v1.4.0 may be the last version available to build on a rpi.  Newer versions have added a
-# Microsoft DirectX dependency https://github.com/microsoft/DirectXShaderCompiler which only supports
-# nvidia, amd, and intel GPUs (Not available for rpi)
-
 rp_module_id="rbdoom3_bfg"
 rp_module_desc="rbdoom3_bfg - Doom 3: BFG Edition"
 rp_module_licence="GPL3 https://raw.githubusercontent.com/RobertBeckebans/RBDOOM-3-BFG/master/LICENSE.md"
@@ -22,18 +18,19 @@ rp_module_repo="git https://github.com/RobertBeckebans/RBDOOM-3-BFG.git :_get_br
 rp_module_flags=""
 
 function _get_branch_rbdoom3_bfg() {
+    # NOTE v1.4.0 may be the last version available to build on a rpi.  Newer versions have added a
+    # Microsoft DirectX dependency https://github.com/microsoft/DirectXShaderCompiler which only
+    # supports nvidia, amd, and intel GPUs (Not available for rpi)
     local version="v1.4.0"
 
     if compareVersions "$__os_debian_ver" eq 10; then
-        version="v1.4.0"
-    elif compareVersions "$__os_debian_ver" gt 10; then
-        if isPlatform "rpi"; then
-            version="v1.4.0"
-        # else
+        version="v1.2.0"
+        # elif compareVersions "$__os_debian_ver" gt 10; then
+        #   if isPlatform "x86_64"; then
         #     local release_url
         #     release_url="https://api.github.com/repos/RobertBeckebans/RBDOOM-3-BFG/releases/latest"
         #     version=$(curl $release_url 2>&1 | grep -m 1 tag_name | cut -d\" -f4 | cut -dv -f2)
-        fi
+        #   fi
     fi
 
     echo -ne "$version"

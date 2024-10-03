@@ -56,7 +56,7 @@ function depends_etlegacy() {
     local depends=(cmake libopenal-dev libssl-dev libjpeg-dev zlib1g-dev libsdl2-dev libpng-dev)
     depnds+=(libglew-dev)
 
-    getDepends "$depends[@]"
+    getDepends "${depends[@]}"
 }
 
 function sources_etlegacy() {
@@ -100,11 +100,11 @@ function install_etlegacy() {
 
 function game_data_etlegacy() {
     downloadAndExtract "https://cdn.splashdamage.com/downloads/games/wet/et260b.x86_full.zip" "$md_build"
-    cd $md_build
+    cd "$md_build"
     ./et260b.x86_keygen_V03.run --noexec --target tmp
-    cd $md_build/tmp/etmain
+    cd "$md_build/tmp/etmain"
 
-    cp *.pk3 $romdir/ports/etlegacy
+    cp ./*.pk3 "$romdir/ports/etlegacy"
 }
 
 function configure_etlegacy() {
@@ -125,8 +125,8 @@ function configure_etlegacy() {
 
     moveConfigDir "$home/.etlegacy" "$md_conf_root/etlegacy"
 
-    mkdir $md_inst/legacy
-    mv $md_inst/cgame.mp.$(_arch_etlegacy).so $md_inst/legacy/
-    mv $md_inst/ui.mp.$(_arch_etlegacy).so $md_inst/legacy/
-    mv $md_inst/qagame.mp.$(_arch_etlegacy).so $md_inst/legacy/
+    mkdir "$md_inst/legacy"
+    mv "$md_inst/cgame.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
+    mv "$md_inst/ui.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
+    mv "$md_inst/qagame.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
 }
