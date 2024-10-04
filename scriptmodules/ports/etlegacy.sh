@@ -39,6 +39,10 @@ function _arch_etlegacy() {
     echo -ne "$(uname -m)"
 }
 
+function _arch_etlegacy2() {
+    echo -ne "$(uname -m | sed -e 's/i.86/x86/' | sed -e 's/^arm.*/arm/')"
+}
+
 function _get_etlagcy_base_params() {
     local params=(-DCMAKE_BUILD_TYPE=Release)
     # -DBUNDLED_OPENSSL=0 -DBUNDLED_CURL=0 -DBUNDLED_JPEG=0 -DBUNDLED_ZLIB=0)
@@ -65,6 +69,12 @@ function depends_etlegacy() {
 
 function sources_etlegacy() {
     gitPullOrClone
+
+    if isPlatform "64bit"; then
+        echo "Downloading submodules for ET:Legacy"
+        git submodule init
+        git submodule update
+    fi
 }
 
 function build_etlegacy() {
@@ -73,8 +83,6 @@ function build_etlegacy() {
 
     if isPlatform "64bit"; then
         params+=(-DCROSS_COMPILE32=1)
-        git submodule init
-        git submodule update
     fi
 
     if isPlatform "rpi"; then
@@ -96,12 +104,12 @@ function install_etlegacy() {
         "build/etl.$(_arch_etlegacy)"
         "build/etlded.$(_arch_etlegacy)"
         "build/legacy/cgame.mp.$(_arch_etlegacy).so"
-        "build/legacy/ui.mp.$(_arch_etlegacy).so"
         "build/legacy/qagame.mp.$(_arch_etlegacy).so"
+        "build/legacy/ui.mp.$(_arch_etlegacy).so"
     )
 
-    if ! isPlatform "rpi"; then
-        md_ret_files+="build/librenderer_opengl1_$(_arch_etlegacy).so"
+    if isPlatform "x86"; then
+        md_ret_files+=("build/librenderer_opengl1_$(_arch_etlegacy).so")
     fi
 }
 
