@@ -22,7 +22,7 @@ rp_module_help="This installs the 32bit version of ET: Legacy.  Per their websit
 rp_module_licence="GPL3 https://raw.githubusercontent.com/etlegacy/etlegacy/master/COPYING.txt"
 rp_module_section="exp"
 rp_module_repo="git https://github.com/etlegacy/etlegacy.git :_get_branch_etlegacy"
-rp_module_flags="!64bit"
+rp_module_flags=""
 
 function _get_branch_etlegacy() {
     # Tested tag was 2.82.1 commit 0a24c70
@@ -43,22 +43,16 @@ function _arch_etlegacy2() {
     echo -ne "$(uname -m | sed -e 's/i.86/x86/' | sed -e 's/^arm.*/arm/')"
 }
 
-function _get_etlagcy_base_params() {
-    local params=(-DCMAKE_BUILD_TYPE=Release)
-    # -DBUNDLED_OPENSSL=0 -DBUNDLED_CURL=0 -DBUNDLED_JPEG=0 -DBUNDLED_ZLIB=0)
-    #params+=(-DBUNDLED_OPENAL=0 -DBUNDLED_SDL=0 -DBUNDLED_PNG=0 -BUNDLED_GLEW=0 -DBUNDLED_SQLITE3=0)
-    #params+=(-DBUNDLED_GLEW=0 -DBUNDLED_FREETYPE=0 -DBUNDLED_MINIZIP=0)
-    #params+=(-DBUNDLED_OGG_VORBIS=0 -DBUNDLED_THEORA=0)
-
-    echo -ne "${params[@]}"
-}
-
 function depends_etlegacy() {
     # Theoretically needs:
     #libc6-dev-i386 libx11-dev:i386 libgl1-mesa-dev:i386
-    local depends=(cmake libopenal-dev libssl-dev libjpeg-dev zlib1g-dev libsdl2-dev libpng-dev)
-    depends+=(libglew-dev libsqlite3-dev libcurl4-openssl-dev libglew-dev libfreetype6-dev)
-    depends+=(libminizip-dev libogg-dev libtheora-dev)
+    local depends=(cmake libopenal-dev libssl-dev libjpeg-dev zlib1g-dev libsdl2-dev libpng-dev
+        libglew-dev libsqlite3-dev libcurl4-openssl-dev libglew-dev libfreetype6-dev
+        libminizip-dev libogg-dev libtheora-dev)
+
+    if compareVersions "$__os_debian_ver" gt 10; then
+        depends+=(liblua5.4-dev)
+    fi
 
     if isPlatform "rpi"; then
         depnds+=(xorg)
@@ -69,25 +63,44 @@ function depends_etlegacy() {
 
 function sources_etlegacy() {
     gitPullOrClone
-
-    if isPlatform "64bit"; then
-        echo "Downloading submodules for ET:Legacy"
-        git submodule init
-        git submodule update
-    fi
 }
 
 function build_etlegacy() {
-    local params
-    params="$(_get_etlagcy_base_params)"
+    local params=(-DCMAKE_BUILD_TYPE=Release -DBUILD_SERVER=1 -DBUILD_CLIENT=1 -DBUILD_MOD=1
+        -DBUILD_MOD_PK3=1 -DBUNDLED_ZLIB=0 -DBUNDLED_MINIZIP=0 -DBUNDLED_JPEG=0
+        -DBUNDLED_CURL=0 -DBUNDLED_WOLFSSL=0 -DBUNDLED_OPENSSL=0 -DBUNDLED_OGG_VORBIS=0
+        -DBUNDLED_THEORA=0 -DBUNDLED_OPENAL=0 -DBUNDLED_FREETYPE=0 -DBUNDLED_PNG=0
+        -DBUNDLED_SQLITE3=0 -DFEATURE_CURL=1 -DFEATURE_SSL=1 -DFEATURE_AUTH=1
+        -DFEATURE_OGG_VORBIS=1 -DFEATURE_THEORA=1 -DFEATURE_OPENAL=1 -DFEATURE_FREETYPE=1
+        -DFEATURE_PNG=1 -DFEATURE_TRACKER=1 -DFEATURE_LUA=1 -DFEATURE_MULTIVIEW=1
+        -DFEATURE_EDV=1 -DFEATURE_ANTICHEAT=1 -DFEATURE_GETTEXT=1 -DFEATURE_DBMS=1
+        -DFEATURE_RATING=1 -DFEATURE_PRESTIGE=1 -DFEATURE_AUTOUPDATE=0
+        -DFEATURE_RENDERER1=1 -DFEATURE_RENDERER2=0 -DFEATURE_RENDERER_GLES=0
+        -DFEATURE_OMNIBOT=1 -DFEATURE_LUASQL=1 -DINSTALL_EXTRA=1 -DINSTALL_GEOIP=1
+        -DINSTALL_WOLFADMIN=1)
 
-    if isPlatform "64bit"; then
+    if isPlatform "64bit" && [[ "$md_id" != "etlegacy_64" ]]; then
         params+=(-DCROSS_COMPILE32=1)
+    else
+        params+=(-DCROSS_COMPILE32=0)
+    fi
+
+    if isPlatform "64bit" && [[ "$md_id" != "etlegacy_64" ]]; then
+        params+=(-DBUNDLED_SDL=1)
+    else
+        params+=(-DBUNDLED_SDL=0)
+    fi
+
+    if compareVersions "$__os_debian_ver" gt 10; then
+        params+=(-DBUNDLED_LUA=0)
+    else
+        params+=(-DBUNDLED_LUA=1)
     fi
 
     if isPlatform "rpi"; then
-        params+=(-DARM=1 -DFEATURE_RENDERER_GLES=0 -DRENDERER_DYNAMIC=0 -DFEATURE_RENDERER2=0)
-        params+=(-DINSTALL_OMNIBOT=0)
+        params+=(-DBUNDLED_GLEW=1 -DRENDERER_DYNAMIC=0 -DINSTALL_OMNIBOT=0)
+    else
+        params+=(-DBUNDLED_GLEW=0 -DRENDERER_DYNAMIC=1 -DINSTALL_OMNIBOT=1)
     fi
 
     mkdir "$md_build/build"
@@ -96,16 +109,27 @@ function build_etlegacy() {
     cmake "${params[@]}" ..
     make
 
-    md_ret_require="$md_build/build/etl.$(_arch_etlegacy)"
+    md_ret_require=(
+        "$md_build/build/etl.$(_arch_etlegacy)"
+        "$md_build/build/legacy/cgame.mp.$(_arch_etlegacy).so"
+        "$md_build/build/legacy/qagame.mp.$(_arch_etlegacy).so"
+        "$md_build/build/legacy/ui.mp.$(_arch_etlegacy).so"
+    )
+
+    if isPlatform "x86"; then
+        md_ret_require+=("$md_build/build/librenderer_opengl1_$(_arch_etlegacy).so")
+    fi
+
 }
 
 function install_etlegacy() {
     md_ret_files=(
         "build/etl.$(_arch_etlegacy)"
         "build/etlded.$(_arch_etlegacy)"
-        "build/legacy/cgame.mp.$(_arch_etlegacy).so"
-        "build/legacy/qagame.mp.$(_arch_etlegacy).so"
-        "build/legacy/ui.mp.$(_arch_etlegacy).so"
+        # "build/legacy/cgame.mp.$(_arch_etlegacy).so"
+        # "build/legacy/qagame.mp.$(_arch_etlegacy).so"
+        # "build/legacy/ui.mp.$(_arch_etlegacy).so"
+        "build/legacy"
     )
 
     if isPlatform "x86"; then
@@ -140,8 +164,13 @@ function configure_etlegacy() {
 
     moveConfigDir "$home/.etlegacy" "$md_conf_root/etlegacy"
 
-    mkdir "$md_inst/legacy"
-    mv "$md_inst/cgame.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
-    mv "$md_inst/ui.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
-    mv "$md_inst/qagame.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
+    if isPlatform "rpi"; then
+        pushd "$md_inst/legacy"
+        ln -s ui.mp.$(_arch_etlegacy).so ui.mp.$(_arch_etlegacy2).so
+    fi
+
+    #mkdir "$md_inst/legacy"
+    #mv "$md_inst/cgame.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
+    #mv "$md_inst/ui.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
+    #mv "$md_inst/qagame.mp.$(_arch_etlegacy).so" "$md_inst/legacy/"
 }

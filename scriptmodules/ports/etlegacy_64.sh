@@ -25,24 +25,7 @@ function sources_etlegacy_64() {
 }
 
 function build_etlegacy_64() {
-    local params
-    params=$(_get_etlagcy_base_params)
-
-    params+=(-DCROSS_COMPILE32=0)
-
-    if isPlatform "rpi"; then
-        params+=(-DARM=1 -DFEATURE_RENDERER_GLES=0 -DRENDERER_DYNAMIC=0 -DFEATURE_RENDERER2=0)
-        params+=(-DINSTALL_OMNIBOT=0)
-    fi
-
-    mkdir "$md_build/build"
-    cd "$md_build/build"
-
-    cmake "${params[@]}" ..
-    make
-
-    md_ret_require="$md_build/build/etl.$(_arch_etlegacy)"
-
+    build_etlegacy
 }
 
 function install_etlegacy_64() {
