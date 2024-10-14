@@ -219,7 +219,7 @@ function gui_retroscraper() {
 
     iniConfig " = " '"' "$configdir/all/retroscraper.cfg"
     eval $(_load_config_retroscraper)
-    chown $user:$user "$configdir/all/retroscraper.cfg"
+    chown $__user:$__group "$configdir/all/retroscraper.cfg"
 
     local default
     while true; do

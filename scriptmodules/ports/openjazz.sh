@@ -40,7 +40,7 @@ function install_openjazz() {
 function game_data_openjazz() {
     if [[ ! -f "$romdir/ports/jazz/JAZZ.EXE" ]]; then
         downloadAndExtract "https://image.dosgamesarchive.com/games/jazz.zip" "$romdir/ports/jazz"
-        chown -R $user:$user "$romdir/ports/jazz"
+        chown -R $__user:$__group "$romdir/ports/jazz"
     fi
 }
 

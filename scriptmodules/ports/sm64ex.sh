@@ -12,7 +12,7 @@
 
 rp_module_id="sm64ex"
 rp_module_desc="sm64ex - Super Mario 64 PC Port (Pi 4 only)"
-rp_module_help="To compile properly, this port requires a Super Mario 64 ROM in z64 format.\n\nPlace your Super Mario 64 ROM into $home with the name baserom.<VERSION>.z64\nwhere VERSION can be us, eu or jp depending on the ROM you are using.\n\nFor example, a US Super Mario 64 ROM should be placed at /home/pi/baserom.us.z64."
+rp_module_help="To compile properly, this port requires a Super Mario 64 ROM in z64 format.\n\nPlace your Super Mario 64 ROM into $home with the name baserom.<VERSION>.z64\nwhere VERSION can be us, eu or jp depending on the ROM you are using.\n\nFor example, a US Super Mario 64 ROM should be placed at $home/baserom.us.z64."
 rp_module_repo="git https://github.com/sm64pc/sm64ex.git nightly"
 rp_module_section="exp"
 rp_module_flags="!mali !all rpi4 rpi3"
@@ -74,7 +74,7 @@ function install_sm64ex() {
 }
 
 function configure_sm64ex() {
-    chown pi:pi "$md_inst"
+    chown $__user:$__group "$md_inst"
 
     local dir
     for dir in .config .local/share; do

@@ -54,6 +54,6 @@ function configure_samtse() {
 "$md_inst/tse/Bin/SeriousSam"
 _EOF_
     chmod +x "$md_inst/$md_id.sh"
-    chown -R pi:pi "/opt/retropie/ports/$md_id/tse"
+    chown -R $__user:$__group "/opt/retropie/ports/$md_id/tse"
     addPort "$md_id" "samtse" "Serious Sam Classic The Second Encounter" "XINIT: $script %ROM%"
 }

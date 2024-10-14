@@ -51,7 +51,7 @@ function configure_lr-reminiscence() {
 #!/bin/bash
 "$rootdir/supplementary/runcommand/runcommand.sh" 0 _PORT_ reminiscence "$romdir/ports/reminiscence/"
 _EOF_
-    chown $user:$user "$file"
+    chown $__user:$__group "$file"
     chmod +x "$file"
 
     mkRomDir "ports/reminiscence"

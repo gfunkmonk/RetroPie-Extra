@@ -16,7 +16,7 @@ rp_module_licence="GPL3 https://raw.githubusercontent.com/iortcw/iortcw/master/S
 rp_module_help="IORTCW requires the pak files of the full game to play. Add all your singleplayer and multiplayer pak files (mp_bin.pk3, mp_pak0.pk3, mp_pak1.pk3, mp_pak2.pk3, mp_pak3.pk3, mp_pak4.pk3, mp_pak5.pk3, mp_pakmaps0.pk3, mp_pakmaps1.pk3, mp_pakmaps2.pk3, mp_pakmaps3.pk3, mp_pakmaps4.pk3, mp_pakmaps5.pk3, mp_pakmaps6.pk3, pak0.pk3, sp_pak1.pk3, sp_pak2.pk3, sp_pak3.pk3 and sp_pak4.pk3) from your RTCW installation to $romdir/ports/rtcw."
 rp_module_repo="git https://github.com/iortcw/iortcw.git master"
 rp_module_section="exp"
-rp_module_flags="!all rpi4 rpi3"
+rp_module_flags="!all rpi4 rpi3 x86"
 
 function _arch_rtcw() {
     # exact parsing from Makefile
@@ -42,28 +42,7 @@ function build_rtcw() {
 
     # Use Case switch to allow future expansion to other potential platforms
     if isPlatform "rpi"; then
-        USE_CODEC_VORBIS=0\
-            USE_CODEC_OPUS=0\
-            USE_CURL=0\
-            USE_CURL_DLOPEN=0\
-            USE_OPENAL=1\
-            USE_OPENAL_DLOPEN=1\
-            USE_RENDERER_DLOPEN=0\
-            USE_VOIP=0\
-            USE_LOCAL_HEADERS=1\
-            USE_INTERNAL_JPEG=1\
-            USE_INTERNAL_OPUS=1\
-            USE_INTERNAL_ZLIB=1\
-            USE_OPENGLES=1\
-            USE_BLOOM=0\
-            USE_MUMBLE=0\
-            BUILD_GAME_SO=1\
-            BUILD_RENDERER_REND2=0\
-            ARCH=arm\
-            PLATFORM=linux\
-            COMPILE_ARCH=arm\
-            COMPILE_PLATFORM=linux\
-            make
+        USE_CODEC_VORBIS=0 USE_CODEC_OPUS=0 USE_CURL=0 USE_CURL_DLOPEN=0 USE_OPENAL=1 USE_OPENAL_DLOPEN=1 USE_RENDERER_DLOPEN=0 USE_VOIP=0 USE_LOCAL_HEADERS=1 USE_INTERNAL_JPEG=1 USE_INTERNAL_OPUS=1 USE_INTERNAL_ZLIB=1 USE_OPENGLES=1 USE_BLOOM=0 USE_MUMBLE=0 BUILD_GAME_SO=1 BUILD_RENDERER_REND2=0 ARCH=arm PLATFORM=linux COMPILE_ARCH=arm COMPILE_PLATFORM=linux make
     else
         make
     fi
@@ -72,33 +51,15 @@ function build_rtcw() {
 
     if isPlatform "rpi"; then
         USE_CODEC_VORBIS=0 \
-            USE_CODEC_OPUS=0\
-            USE_CURL=1\
-            USE_CURL_DLOPEN=1\
-            USE_OPENAL=1\
-            USE_OPENAL_DLOPEN=1\
-            USE_RENDERER_DLOPEN=0\
-            USE_VOIP=0\
-            USE_LOCAL_HEADERS=1\
-            USE_INTERNAL_JPEG=1\
-            USE_INTERNAL_OPUS=1\
-            USE_INTERNAL_ZLIB=1\
-            USE_OPENGLES=1\
-            USE_BLOOM=0\
-            USE_MUMBLE=0\
-            BUILD_GAME_SO=1\
-            BUILD_RENDERER_REND2=0\
-            ARCH=arm\
-            PLATFORM=linux\
-            COMPILE_ARCH=arm\
-            COMPILE_PLATFORM=linux\
-            make
+            USE_CODEC_OPUS=0 USE_CURL=1 USE_CURL_DLOPEN=1 USE_OPENAL=1 USE_OPENAL_DLOPEN=1 USE_RENDERER_DLOPEN=0 USE_VOIP=0 USE_LOCAL_HEADERS=1 USE_INTERNAL_JPEG=1 USE_INTERNAL_OPUS=1 USE_INTERNAL_ZLIB=1 USE_OPENGLES=1 USE_BLOOM=0 USE_MUMBLE=0 BUILD_GAME_SO=1 BUILD_RENDERER_REND2=0 ARCH=arm PLATFORM=linux COMPILE_ARCH=arm COMPILE_PLATFORM=linux make
     else
         make
     fi
 
-    md_ret_require="$md_build/SP"
-    md_ret_require="$md_build/MP"
+    md_ret_require=(
+        "$md_build/SP"
+        "$md_build/MP"
+    )
 }
 
 function install_rtcw() {
@@ -131,8 +92,8 @@ function game_data_rtcw() {
     mv /opt/retropie/ports/rtcw/vm /opt/retropie/ports/rtcw/main
     cp "$md_data/wolfconfig.cfg" "$home/.wolf/main"
     cp "$md_data/wolfconfig_mp.cfg" "$home/.wolf/main"
-    chown -R $user:$user "$romdir/ports/rtcw"
-    chown -R $user:$user "$md_conf_root/rtcw-sp"
+    chown -R $__user:$__group "$romdir/ports/rtcw"
+    chown -R $__user:$__group "$md_conf_root/rtcw-sp"
 }
 
 function configure_rtcw() {

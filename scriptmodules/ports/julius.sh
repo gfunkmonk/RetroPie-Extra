@@ -40,7 +40,7 @@ function install_julius() {
 }
 
 function game_data_julius() {
-    chown -R $user:$user "$romdir/ports/caesar3"
+    chown -R $__user:$__group "$romdir/ports/caesar3"
 }
 
 function configure_julius() {

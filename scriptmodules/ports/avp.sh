@@ -27,13 +27,13 @@ function sources_avp() {
 
 function install_avp() {
     md_ret_files=('cd tracks.txt'
-		'language.txt'
-		'avp'
-		'credits.txt'
-		'.avp'
-		'avp_huds'
-		'avp_rifs'
-		'fastfile'
+        'language.txt'
+        'avp'
+        'credits.txt'
+        '.avp'
+        'avp_huds'
+        'avp_rifs'
+        'fastfile'
     )
 }
 

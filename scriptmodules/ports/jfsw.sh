@@ -49,7 +49,7 @@ function gamedata_jfsw() {
         unzip -Lo "$tempdir/swsw12.shr" sw.grp sw.rts -d "$dest"
         rm -rf "$tempdir"
     fi
-    chown -R $user:$user "$dest"
+    chown -R $__user:$__group "$dest"
 }
 
 function configure_jfsw() {

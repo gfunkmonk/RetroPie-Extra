@@ -39,10 +39,10 @@ function install_duckstation() {
 function configure_duckstation() {
     mkRomDir "psx"
     mkUserDir "$md_conf_root/psx"
-    mkdir -p "/home/pi/.local/share/duckstation/"
+    mkdir -p "$home/.local/share/duckstation/"
     
     # symlink the bios so it can be installed with the other bios files
-    ln -sf "$biosdir/" "/home/pi/.local/share/duckstation/bios"
+    ln -sf "$biosdir/" "$home/.local/share/duckstation/bios"
 
     addEmulator 0 "$md_id" "psx" "XINIT: $md_inst/duckstation.sh -fullscreen %ROM%"
     addSystem "psx"
@@ -57,5 +57,5 @@ pushd "$md_inst/duckstation"
 popd
 _EOF_
     chmod +x "$file"
-	chown $user:$user -R "/home/pi/.local/share/duckstation"
+	chown $__user:$__user -R "$home/.local/share/duckstation"
 }

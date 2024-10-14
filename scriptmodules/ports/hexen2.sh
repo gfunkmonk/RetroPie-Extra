@@ -40,7 +40,7 @@ function install_hexen2() {
 function game_data_hexen2() {
     if [[ ! -f "$romdir/ports/hexen2/data1/pak0.pak" ]]; then
         downloadAndExtract "https://netix.dl.sourceforge.net/project/uhexen2/Hexen2Demo-Nov.1997/hexen2demo_nov1997-linux-i586.tgz" "$romdir/ports/hexen2" --strip-components 1 "hexen2demo_nov1997/data1"
-        chown -R $user:$user "$romdir/ports/hexen2/data1"
+        chown -R $__user:$__group "$romdir/ports/hexen2/data1"
     fi
 }
 

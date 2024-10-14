@@ -53,5 +53,5 @@ function configure_lr-freej2me() {
     addSystem "j2me" "J2ME" ".jar .JAR"
 
     cp -Rv "$md_inst/freej2me-lr.jar" "$md_inst/freej2me-sdl.jar" "$md_inst/freej2me.jar" "$biosdir"
-    chown $user:$user -R "$biosdir/freej2me.jar" "$biosdir/freej2me-sdl.jar" "$biosdir/freej2me-lr.jar"
+    chown $__user:$__group -R "$biosdir/freej2me.jar" "$biosdir/freej2me-sdl.jar" "$biosdir/freej2me-lr.jar"
 }

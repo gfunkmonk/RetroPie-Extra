@@ -86,7 +86,7 @@ function configure_pydance() {
         wget https://icculus.org/pyddr/pydance-cdtitle.png
         mv pydance-cdtitle.png pydance.png
     fi
-    chown -R $user:$user /opt/retropie/ports/pydance
+    chown -R $__user:$__group /opt/retropie/ports/pydance
 	#create buffer script for launch
  cat > "$script" << _EOF_
 #!/bin/bash

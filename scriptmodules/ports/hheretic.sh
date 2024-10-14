@@ -38,13 +38,13 @@ function install_hheretic() {
 
 function game_data_heretic() {
     if [[ ! -f "$romdir/ports/heretic/heretic.wad" ]]; then downloadAndExtract "https://github.com/Exarkuniv/game-data/raw/main/heretic.zip" "$romdir/ports/heretic" 
-    chown -R $user:$user "$romdir/ports/heretic"
+    chown -R $__user:$__group "$romdir/ports/heretic"
     fi
         [[ ! -d "$romdir/ports/heretic/music" ]] && downloadAndExtract "http://sycraft.org/content/audio/heretic/hereticsoundtrackhq.zip" "$romdir/ports/heretic/files" 
     unzip $romdir/ports/heretic/files/musichq.zip -d $romdir/ports/heretic/files
     mv "$romdir/ports/heretic/files/Data/jHeretic/Music"* "$romdir/ports/heretic/music"
     rm -r "$romdir/ports/heretic/files"
-    chown -R $user:$user "$romdir/ports/heretic/music"
+    chown -R $__user:$__group "$romdir/ports/heretic/music"
 
 }
 

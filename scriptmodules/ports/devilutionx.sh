@@ -46,7 +46,7 @@ function game_data_diablo() {
     if [[ ! -f "$romdir/ports/devilutionx/diablo.exe" ]]; then
         downloadAndExtract "https://github.com/Exarkuniv/game-data/raw/main/diablo.zip" "$romdir/ports/devilutionx"
     mv "$romdir/ports/devilutionx/diablo"* "$romdir/ports/devilutionx/"
-    chown -R $user:$user "$romdir/ports/devilutionx"
+    chown -R $__user:$__group "$romdir/ports/devilutionx"
     fi
 }
 

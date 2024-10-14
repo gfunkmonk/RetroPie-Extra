@@ -27,7 +27,7 @@ function sources_vcmi() {
 
 function build_vcmi() {
 	mkdir build && cd build
-	cmake ../vcmi -DENABLE_LAUNCHER=OFF -DENABLE_EDITOR=OFF -DENABLE_TEST=OFF -DM_DATA_DIR=/home/pi/RetroPie/roms/ports/vcmi   
+	cmake ../vcmi -DENABLE_LAUNCHER=OFF -DENABLE_EDITOR=OFF -DENABLE_TEST=OFF -DM_DATA_DIR=$home/RetroPie/roms/ports/vcmi   
 	cmake --build . -- -j2
     md_ret_require=()
 }
@@ -39,7 +39,7 @@ function install_vcmi() {
 
 function configure_vcmi() {
     mkRomDir "/ports/$md_id"
-    moveConfigDir "/home/pi/.local/share/$md_id/Saves" "$md_conf_root/$md_id/Saves"
+    moveConfigDir "$home/.local/share/$md_id/Saves" "$md_conf_root/$md_id/Saves"
     local script="$md_inst/$md_id.sh"
 
     cat > "$script" << _EOF_
@@ -48,6 +48,6 @@ cd $md_inst/bin && ./vcmiclient
 _EOF_
 
    chmod +x "$script"
-   ln -sf "$romdir/ports/$md_id" "/home/pi/.local/share"
+   ln -sf "$romdir/ports/$md_id" "$home/.local/share"
    addPort "$md_id" "vcmi" "Heroes of Might and Magic III" "$script"
 }

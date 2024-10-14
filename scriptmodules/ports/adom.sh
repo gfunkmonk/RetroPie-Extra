@@ -15,7 +15,7 @@ rp_module_desc="Ancient Domains of Mystery - a free roguelike by Thomas Biskup"
 rp_module_help="A keyboard is required to play. Press SHIFT+Q to exit the game."
 rp_module_licence="PROP"
 rp_module_section="exp"
-rp_module_flags="!all arm rpi4 rpi5"
+rp_module_flags="!all arm rpi4 rpi5 x86"
 
 function __get_binary_url_adom() {
     local url="https://www.adom.de/home/download/current/adom_linux_arm_3.3.3.tar.gz"

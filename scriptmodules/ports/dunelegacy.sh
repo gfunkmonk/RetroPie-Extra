@@ -45,7 +45,7 @@ function game_data_dunelegacy() {
         downloadAndExtract "https://github.com/Exarkuniv/game-data/raw/main/dune-II.zip" "$romdir/ports/dune2"
     mv "$romdir/ports/dune2/dune-ii-the-building-of-a-dynasty/"* "$romdir/ports/dune2/data"
     rmdir "$romdir/ports/dune2/dune-ii-the-building-of-a-dynasty/"
-    chown -R $user:$user "$romdir/ports/dune2"
+    chown -R $__user:$__group "$romdir/ports/dune2"
     fi
 }
 
@@ -53,7 +53,7 @@ function configure_dunelegacy() {
     mkRomDir "ports/dune2/data"
     moveConfigDir "$home/.config/dunelegacy" "$md_conf_root/dunelegacy"
     addPort "$md_id" "dunelegacy" "Dune Legacy" "XINIT: $md_inst/bin/dunelegacy"     	
-    ln -s "/home/pi/RetroPie/roms/ports/dune2/data" "$home/.config/dunelegacy" 
+    ln -s "$home/RetroPie/roms/ports/dune2/data" "$home/.config/dunelegacy" 
 
     [[ "$md_mode" == "install" ]] && game_data_dunelegacy
 }

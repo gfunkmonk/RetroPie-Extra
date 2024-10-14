@@ -19,7 +19,7 @@ rp_module_section="exp"
 rp_module_flags="!all 64bit !rpi5"
 
 function depends_lr-boom3() {
-    getDepends libjpeg-turbo8-dev libvorbis-dev libogg-dev libopenal-dev libsdl2-dev libcurl4-openssl-dev
+    getDepends libjpeg-dev libvorbis-dev libogg-dev libopenal-dev libsdl2-dev libcurl4-openssl-dev
 }
 
 function _get_targets_lr-boom3() {
@@ -35,11 +35,11 @@ function build_lr-boom3() {
     local target
     for target in $(_get_targets_lr-boom3); do
         make clean
-	if [[ "$target" == boom3_xp ]]; then
-	    make D3XP=1
-	else
-	    make
-	fi
+        if [[ "$target" == boom3_xp ]]; then
+            make D3XP=1
+        else
+            make
+        fi
         cp "${target}_libretro.so" "cores"
         md_ret_require+=("$md_build/neo/cores/${target}_libretro.so")
     done
@@ -67,11 +67,11 @@ function add_games_lr-boom3() {
     for game in "${!games[@]}"; do
         pk4="$romdir/ports/doom3/$game/pak000.pk4"
         if [[ -f "$pk4" ]]; then
-	    if [[ "$game" == d3xp ]]; then
+            if [[ "$game" == d3xp ]]; then
                 addPort "$md_id-xp" "doom3" "${games[$game]}" "$cmd1" "$pk4"
-	    else
+            else
                 addPort "$md_id" "doom3" "${games[$game]}" "$cmd2" "$pk4"
-	    fi
+            fi
         fi
     done
 }
@@ -87,5 +87,5 @@ function configure_lr-boom3() {
 
     [[ "$md_mode" == "install" ]] && add_games_lr-boom3
 
-    chown $user:$user "ports/doom3"
+    chown $__user:$__group "ports/doom3"
 }

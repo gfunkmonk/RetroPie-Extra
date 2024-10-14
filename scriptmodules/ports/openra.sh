@@ -15,7 +15,7 @@ rp_module_desc="Open RA - Real Time Strategy game engine supporting early Westwo
 rp_module_licence="GPL3 https://github.com/OpenRA/OpenRA/blob/bleed/COPYING"
 rp_module_help="Currently working on how to pull the Data files No ETA"
 rp_module_section="exp"
-rp_module_flags="!mali !all rpi4 rpi3"
+rp_module_flags="!mali !all rpi4 rpi3 x86"
 
 function depends_openra() {
     getDepends libfreetype6 libopenal1 liblua5.1-0 libsdl2-2.0-0 xdg-utils zenity wget dbus-x11 apt-transport-https dirmngr gnupg ca-certificates xorg 
@@ -30,7 +30,7 @@ function depends_openra() {
 function sources_openra() {
     mkdir -p openra
     wget https://github.com/OpenRA/OpenRA/releases/download/release-20230225/OpenRA-release-20230225-source.tar.bz2
-    tar xvjf OpenRA-release-20230225-source.tar.bz2 -C /home/pi/RetroPie-Setup/tmp/build/openra/openra 	
+    tar xvjf OpenRA-release-20230225-source.tar.bz2 -C $home/RetroPie-Setup/tmp/build/openra/openra 	
 }
 
 function build_openra() {

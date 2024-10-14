@@ -100,7 +100,7 @@ function configure_supermodel-mechafatnick() {
     mv $romdir/supermodel/model3emu/mechafatnick/Supermodel.ini $romdir/supermodel/model3emu/mechafatnick/Supermodel.ini.old 2>&-
     mv $md_inst/Config/Supermodel.ini  $romdir/supermodel/model3emu/mechafatnick/Supermodel.ini
     #fix permissions
-    chown $user:$user -R "$romdir/supermodel/model3emu/mechafatnick"
+    chown $__user:$__group -R "$romdir/supermodel/model3emu/mechafatnick"
     #make symlinks
     ln -sv $romdir/supermodel/model3emu/mechafatnick/NVRAM $md_inst/NVRAM
     ln -sv $romdir/supermodel/model3emu/mechafatnick/Saves $md_inst/Saves
