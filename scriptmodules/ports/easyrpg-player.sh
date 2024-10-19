@@ -19,7 +19,7 @@ rp_module_section="exp"
 rp_module_flags="!mali !all rpi4 rpi3 "
 
 function depends_easyrpg-player() {
-    getDepends cmake autoconf automake libtool doxygen libsdl2-dev libsdl2-mixer-dev libpng-dev libfreetype6-dev libboost-dev libpixman-1-dev libmpg123-dev libwildmidi-dev libvorbis-dev libopusfile-dev libsndfile1-dev libxmp-dev libspeexdsp-dev libharfbuzz-dev libfmt-dev zlib1g-dev libraspberrypi-dev libraspberrypi-bin expat libexpat1-dev libexpat-ocaml-dev
+    getDepends cmake autoconf automake libtool doxygen libsdl2-dev libsdl2-mixer-dev libpng-dev libfreetype6-dev libboost-dev libpixman-1-dev libmpg123-dev libwildmidi-dev libvorbis-dev libopusfile-dev libsndfile1-dev libxmp-dev libspeexdsp-dev libharfbuzz-dev libfmt-dev zlib1g-dev expat libexpat1-dev libexpat-ocaml-dev
 }
 
 function sources_easyrpg-player() {
