@@ -14,7 +14,7 @@ rp_module_id="kat5200"
 rp_module_desc="Atari 5200/8-bit emulator"
 rp_module_help="ROM Extensions: .7z .a52 .bin .zip .7Z .A52 .BIN .ZIP\n\nCopy your kat5200 games to $romdir/kat5200\n\nCopy your Atari 5200 roms to $romdir/atari5200 You need to copy the Atari 800/5200 BIOS files (5200.ROM, ATARIBAS.ROM, ATARIOSB.ROM and ATARIXL.ROM) to the folder $biosdir and then on first launch configure it to scan that folder for roms (F1 -> Emulator Configuration -> System Rom Settings)"
 rp_module_licence="GPL http://kat5200.jillybunch.com/doc/index.html"
-rp_module_repo="file http://kat5200.jillybunch.com/downloads/kat5200-0.8.1.tar.gz"
+rp_module_repo="file https://files.emulationking.com/atari5200/emulators/kat5200/kat5200-linux-0.8.1.tar.gz"
 rp_module_section="exp"
 rp_module_flags="!mali !kms !rpi5"
 
